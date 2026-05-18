@@ -1,11 +1,46 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Welcome from "../components/Welcome.astro";
+import Layout from "../layouts/Layout.astro";
+import archieml from "archieml";
+import primrose from "../assets/primrose.png";
+import redbud from "../assets/redbud.png";
+import "../styles/global.css";
+
+const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
+
+const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
+
+const text = await fetch(url).then((res) => res.text());
+
+const data = archieml.load(text);
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<h1>{data.title}</h1>
+<p>{data.dek}</p>
+
+<button id="primrose" class="plant">
+  <img
+    src={primrose.src}
+    class="w-20 drop-shadow-2xl drop-shadow-yellow-500/80 cursor-pointer"
+  />
+</button>
+
+<button id="redbud" class="plant">
+  <img
+    src={redbud.src}
+    class="w-100 drop-shadow-2xl drop-shadow-yellow-500/80 cursor-pointer"
+  />
+</button>
+
+<script>
+  const plants = document.querySelectorAll("button.plant");
+
+  plants.forEach((plant) => {
+    plant.addEventListener("click", () => {
+      alert(`${plant.id} plant was clicked!`);
+    });
+  });
+</script>

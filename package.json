@@ -12,10 +12,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.0",
     "archieml": "^0.5.0",
     "astro": "^6.3.2",
+    "flowbite": "^4.0.2",
     "googleapis": "^171.4.0",
     "html-entities": "^2.6.0",
-    "htmlparser2": "^12.0.0"
+    "htmlparser2": "^12.0.0",
+    "tailwindcss": "^4.3.0"
   }
 }
