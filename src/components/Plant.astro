@@ -1,0 +1,22 @@
+---
+interface Props {
+  id: string;
+  imgSrc: string;
+  modalTarget: string;
+}
+
+const { id, imgSrc, modalTarget } = Astro.props;
+---
+
+<button
+  id={id}
+  class="plant"
+  data-modal-target={modalTarget}
+  data-modal-toggle={modalTarget}
+  type="button"
+>
+  <img
+    src={imgSrc}
+    class="w-20 drop-shadow-2xl drop-shadow-yellow-500/80 cursor-pointer"
+  />
+</button>
