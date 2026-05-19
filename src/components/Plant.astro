@@ -2,10 +2,11 @@
 interface Props {
   id: string;
   imgSrc: string;
+  imgWidth: number;
   modalTarget: string;
 }
 
-const { id, imgSrc, modalTarget } = Astro.props;
+const { id, imgSrc, imgWidth, modalTarget } = Astro.props;
 ---
 
 <button
@@ -17,6 +18,6 @@ const { id, imgSrc, modalTarget } = Astro.props;
 >
   <img
     src={imgSrc}
-    class="w-20 drop-shadow-2xl drop-shadow-yellow-500/80 cursor-pointer"
+    class={`w-${imgWidth} drop-shadow-2xl drop-shadow-yellow-500/80 cursor-pointer`}
   />
 </button>
