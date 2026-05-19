@@ -1,10 +1,11 @@
 ---
+import type { Plant } from "../pages/index.astro";
+
 interface Props {
-  id: string;
-  description: string;
+  plant: Plant;
 }
 
-const { id, description } = Astro.props;
+const { id, title, scientific, description } = Astro.props.plant;
 ---
 
 <div
@@ -20,9 +21,10 @@ const { id, description } = Astro.props;
     >
       <!-- Modal header -->
       <div
-        class="flex items-center justify-between border-b border-default pb-4 md:pb-5"
+        class="flex gap-4 items-center justify-between border-b border-default pb-4 md:pb-5"
       >
-        <h3 class="text-lg font-medium text-heading capitalize">{id}</h3>
+        <h3 class="text-lg font-medium text-heading capitalize">{title}</h3>
+        <p class="text-sm">{scientific}</p>
         <button
           type="button"
           class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"

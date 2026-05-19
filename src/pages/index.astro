@@ -14,16 +14,12 @@ const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
 const text = await fetch(url).then((res) => res.text());
 const data = archieml.load(text);
 
-console.log(data.plants);
-
-interface Plant {
+export interface Plant {
   id: string;
-  name: string;
+  title: string;
+  scientific: string;
   description: string;
 }
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <h1>{data.title}</h1>
@@ -36,49 +32,14 @@ interface Plant {
   modalTarget="primrose-modal"
 />
 <Plant
-  id="redbud"
+  id="eastern-redbud"
   imgSrc={redbud.src}
   imgWidth={100}
-  modalTarget="redbud-modal"
+  modalTarget="eastern-redbud-modal"
 />
 
-{
-  data.plants.map((plant: Plant) => (
-    <PlantModal id={plant.id} description={plant.description} />
-  ))
-}
-
-<!-- <script>
-  const plants = document.querySelectorAll("button.plant");
-
-  plants.forEach((plant) => {
-    plant.addEventListener("click", () => {
-      alert(`${plant.id} plant was clicked!`);
-    });
-  });
-</script> -->
+{data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
 
 <script>
   import { Modal } from "flowbite";
-
-  // select the two elements that we'll work with
-  const $buttonElement: HTMLElement | null = document.querySelector(".plant");
-  const $modalElement: HTMLElement | null =
-    document.querySelector("#plant-modal");
-
-  if ($modalElement) {
-    const modal = new Modal($modalElement);
-
-    $buttonElement?.addEventListener("click", () => {
-      modal.show();
-    });
-
-    document
-      .querySelectorAll("[data-modal-hide='plant-modal']")
-      .forEach((btn) => {
-        btn.addEventListener("click", () => {
-          modal.hide();
-        });
-      });
-  }
 </script>
