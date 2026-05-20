@@ -1,11 +1,6 @@
 ---
-import Welcome from "../components/Welcome.astro";
-import Layout from "../layouts/Layout.astro";
-import Plant from "../components/Plant.astro";
-import PlantModal from "../components/PlantModal.astro";
 import archieml from "archieml";
-import primrose from "../assets/primrose.png";
-import redbud from "../assets/redbud.png";
+import gatesClosed from "../assets/gates-closed.png";
 import "../styles/global.css";
 
 // Load data from TAG google doc
@@ -13,33 +8,21 @@ const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
 const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
 const text = await fetch(url).then((res) => res.text());
 const data = archieml.load(text);
-
-export interface Plant {
-  id: string;
-  title: string;
-  scientific: string;
-  description: string;
-}
 ---
 
-<h1>{data.title}</h1>
-<p>{data.dek}</p>
-
-<Plant
-  id="primrose"
-  imgSrc={primrose.src}
-  imgWidth={20}
-  modalTarget="primrose-modal"
-/>
-<Plant
-  id="eastern-redbud"
-  imgSrc={redbud.src}
-  imgWidth={100}
-  modalTarget="eastern-redbud-modal"
-/>
-
-{data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
-
-<script>
-  import { Modal } from "flowbite";
-</script>
+<img src={gatesClosed.src} class="h-screen w-screen object-cover" />
+<button
+  type="button"
+  class="
+    absolute top-[75%] left-1/2 -translate-x-1/2 rounded-xl bg-amber-900 px-8
+    py-4 text-5xl text-white outline-amber-900
+  "
+  >Enter</button
+>
+<button
+  type="button"
+  class="
+    absolute top-[80%] left-1/2 -translate-x-1/2 rounded-xl bg-amber-900 px-8
+    py-4 text-5xl text-white outline-amber-900
+  "
+  >Exit</button>

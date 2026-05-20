@@ -1,0 +1,33 @@
+---
+import Plant from "../components/Plant.astro";
+import PlantModal from "../components/PlantModal.astro";
+import archieml from "archieml";
+import primrose from "../assets/primrose.png";
+import redbud from "../assets/redbud.png";
+
+export interface Plant {
+  id: string;
+  title: string;
+  scientific: string;
+  description: string;
+}
+---
+
+<Plant
+  id="primrose"
+  imgSrc={primrose.src}
+  imgWidth={100}
+  modalTarget="primrose-modal"
+/>
+<Plant
+  id="eastern-redbud"
+  imgSrc={redbud.src}
+  imgWidth={400}
+  modalTarget="eastern-redbud-modal"
+/>
+
+{data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
+
+<script>
+  import { Modal } from "flowbite";
+</script>

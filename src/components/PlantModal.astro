@@ -12,26 +12,41 @@ const { id, title, scientific, description } = Astro.props.plant;
   id={`${id}-modal`}
   tabindex="-1"
   aria-hidden="true"
-  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+  class="
+    fixed inset-x-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full
+    items-center justify-center overflow-x-hidden overflow-y-auto
+    md:inset-0
+  "
 >
-  <div class="relative p-4 w-full max-w-2xl max-h-full">
+  <div class="relative max-h-full w-full max-w-2xl p-4">
     <!-- Modal content -->
     <div
-      class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      class="
+        relative rounded-base border border-default bg-neutral-primary-soft p-4
+        shadow-sm
+        md:p-6
+      "
     >
       <!-- Modal header -->
       <div
-        class="flex gap-4 items-center justify-between border-b border-default pb-4 md:pb-5"
+        class="
+          flex items-center justify-between gap-4 border-b border-default pb-4
+          md:pb-5
+        "
       >
         <h3 class="text-lg font-medium text-heading capitalize">{title}</h3>
         <p class="text-sm">{scientific}</p>
         <button
           type="button"
-          class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          class="
+            ms-auto inline-flex size-9 cursor-pointer items-center
+            justify-center rounded-base bg-transparent text-sm text-body
+            hover:bg-neutral-tertiary hover:text-heading
+          "
           data-modal-hide={`${id}-modal`}
         >
           <svg
-            class="w-5 h-5"
+            class="size-5"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -52,7 +67,10 @@ const { id, title, scientific, description } = Astro.props.plant;
         </button>
       </div>
       <!-- Modal body -->
-      <div class="space-y-4 md:space-y-6 py-4 md:py-6">
+      <div class="
+        space-y-4 py-4
+        md:space-y-6 md:py-6
+      ">
         <p class="leading-relaxed text-body">
           {description}
         </p>

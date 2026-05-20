@@ -18,6 +18,7 @@ const { id, imgSrc, imgWidth, modalTarget } = Astro.props;
 >
   <img
     src={imgSrc}
-    class={`w-${imgWidth} drop-shadow-2xl drop-shadow-yellow-500/80 cursor-pointer`}
+    class="cursor-pointer drop-shadow-2xl drop-shadow-yellow-500/80"
+    width={`${imgWidth}px`}
   />
 </button>
