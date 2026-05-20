@@ -1,28 +1,62 @@
 ---
 import archieml from "archieml";
 import gatesClosed from "../assets/gates-closed.png";
+import rightGate from "../assets/right-gate.png";
 import "../styles/global.css";
-
-// Load data from TAG google doc
-const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
-const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
-const text = await fetch(url).then((res) => res.text());
-const data = archieml.load(text);
 ---
 
-<img src={gatesClosed.src} class="h-screen w-screen object-cover" />
-<button
-  type="button"
-  class="
-    absolute top-[75%] left-1/2 -translate-x-1/2 rounded-xl bg-amber-900 px-8
-    py-4 text-5xl text-white outline-amber-900
-  "
-  >Enter</button
->
-<button
-  type="button"
-  class="
-    absolute top-[80%] left-1/2 -translate-x-1/2 rounded-xl bg-amber-900 px-8
-    py-4 text-5xl text-white outline-amber-900
-  "
-  >Exit</button>
+<section id="landing" class="relative h-screen w-screen overflow-hidden">
+  <img id="img-gates-closed" src={gatesClosed.src} class="
+    absolute inset-0 h-screen w-screen object-cover opacity-100
+    transition-opacity duration-700
+  " />
+  <img id="img-gates-open" src={rightGate.src} class="
+    absolute inset-0 h-screen w-screen object-cover opacity-0 transition-opacity
+    duration-700
+  " />
+  <button
+    id="btn-enter"
+    type="button"
+    class="
+      absolute top-[75%] left-1/2 w-1/2 -translate-x-1/2 cursor-pointer
+      rounded-2xl bg-amber-900 p-4 text-center text-5xl text-white
+      outline-amber-900
+    "
+  >
+    Enter
+  </button>
+  <button
+    id="btn-exit"
+    type="button"
+    class="
+      absolute top-[80%] left-1/2 w-1/2 -translate-x-1/2 cursor-pointer
+      rounded-2xl bg-amber-900 p-4 text-center text-5xl text-white
+      outline-amber-900
+    "
+  >
+    Exit
+</button>
+</section>
+
+<script>
+  const enterBtn = document.getElementById("btn-enter");
+  const exitBtn = document.getElementById("btn-exit")
+  const bgImage = document.getElementById("img-gates-closed");
+  const bgImage2 = document.getElementById("img-gates-open");
+
+  enterBtn?.addEventListener("click", () => {
+    bgImage?.classList.add("opacity-0")
+    bgImage?.classList.remove("opacity-100")
+
+    bgImage2?.classList.add("opacity-100")
+    bgImage2?.classList.remove("opacity-0")
+  })
+
+  exitBtn?.addEventListener("click", () => {
+    bgImage2?.classList.remove("opacity-100")
+    bgImage2?.classList.add("opacity-0")
+
+    bgImage?.classList.remove("opacity-0")
+    bgImage?.classList.add("opacity-100")
+  })
+</script>
