@@ -2,3 +2,19 @@
 @import "flowbite/src/themes/default";
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
+
+@keyframes haloPulse {
+  0% {
+    filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 45px rgba(250, 204, 21, 1));
+  }
+  100% {
+    filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.5));
+  }
+}
+
+.animate-haloPulse {
+  animation: haloPulse 1.6s infinite;
+}

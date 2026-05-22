@@ -40,12 +40,17 @@ export interface Plant {
   <Plant
     id="eastern-redbud"
     imgSrc={redbud.src}
-    imgWidth={900}
+    imgWidth={800}
     modalTarget="eastern-redbud-modal"
-    class="absolute top-[11%] right-[-7%]"
+    class="absolute top-[13.5%] right-[-2.5%]"
   />
 
   {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
+
+  <div class="flex flex-row gap-4">
+    <button id="next">Next</button>
+    <button id="back">Back</button>
+  </div>
 </section>
 
 <script>
