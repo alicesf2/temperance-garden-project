@@ -17,18 +17,27 @@ importers:
       astro:
         specifier: ^6.3.2
         version: 6.3.2(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.60.3)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       flowbite:
         specifier: ^4.0.2
         version: 4.0.2(rollup@4.60.3)
       googleapis:
         specifier: ^171.4.0
         version: 171.4.0
+      gsap:
+        specifier: ^3.15.0
+        version: 3.15.0
       html-entities:
         specifier: ^2.6.0
         version: 2.6.0
       htmlparser2:
         specifier: ^12.0.0
         version: 12.0.0
+      tailwind-merge:
+        specifier: ^3.6.0
+        version: 3.6.0
       tailwindcss:
         specifier: ^4.3.0
         version: 4.3.0
@@ -1429,6 +1438,9 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
+  gsap@3.15.0:
+    resolution: {integrity: sha512-dMW4CWBTUK1AEEDeZc1g4xpPGIrSf9fJF960qbTZmN/QwZIWY5wgliS6JWl9/25fpTGJrMRtSjGtOmPnfjZB+A==}
+
   h3@1.15.11:
     resolution: {integrity: sha512-L3THSe2MPeBwgIZVSH5zLdBBU90TOxarvhK9d04IDY2AmVS8j2Jz2LIWtwsGOU3lu2I5jCN7FNvVfY2+XyF+mg==}
 
@@ -2217,6 +2229,9 @@ packages:
     peerDependenciesMeta:
       '@eslint/css':
         optional: true
+
+  tailwind-merge@3.6.0:
+    resolution: {integrity: sha512-uxL7qAVQriqRQPAyK3pj66VqskWqoZ37PW94jwOTwNfq/z9oyu1V+eqrZqtR2+fCiXdYOZe/Modt8GtvqNzu+w==}
 
   tailwindcss@4.3.0:
     resolution: {integrity: sha512-y6nxMGB1nMW9R6k96e5gdIFzcfL/gTJRNaqGes1YvkLnPVXzWgbqFF2yLC0T8G774n24cx3Pe8XrKoniCOAH+Q==}
@@ -3847,6 +3862,8 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
+  gsap@3.15.0: {}
+
   h3@1.15.11:
     dependencies:
       cookie-es: 1.2.3
@@ -4862,6 +4879,8 @@ snapshots:
       '@pkgr/core': 0.2.9
 
   tailwind-csstree@0.3.1: {}
+
+  tailwind-merge@3.6.0: {}
 
   tailwindcss@4.3.0: {}
 

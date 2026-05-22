@@ -1,9 +1,10 @@
 ---
+import archieml from "archieml";
 import Plant from "../components/Plant.astro";
 import PlantModal from "../components/PlantModal.astro";
-import archieml from "archieml";
 import primrose from "../assets/primrose.png";
 import redbud from "../assets/redbud.png";
+import garden from "../assets/garden.png"
 import "../styles/global.css";
 
 // Load data from TAG google doc
@@ -20,20 +21,32 @@ export interface Plant {
 }
 ---
 
-<Plant
-  id="primrose"
-  imgSrc={primrose.src}
-  imgWidth={100}
-  modalTarget="primrose-modal"
-/>
-<Plant
-  id="eastern-redbud"
-  imgSrc={redbud.src}
-  imgWidth={400}
-  modalTarget="eastern-redbud-modal"
-/>
+<section class="relative h-screen w-screen items-center overflow-hidden p-6">
+  <h1 class="text-[80px]">TAG Sanctuary</h1>
+  <h4 class="text-5xl">Community Rewilding</h4>
 
-{data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
+  {data.narrative.map((line: string, i: number) => (
+    <p class="text-3xl">{line}</p>
+  ))}
+
+  <img src={garden.src} class="absolute inset-0 h-screen object-cover"/>
+  <Plant
+    id="primrose"
+    imgSrc={primrose.src}
+    imgWidth={100}
+    modalTarget="primrose-modal"
+    class="absolute top-[50%] left-[-3%]"
+  />
+  <Plant
+    id="eastern-redbud"
+    imgSrc={redbud.src}
+    imgWidth={900}
+    modalTarget="eastern-redbud-modal"
+    class="absolute top-[11%] right-[-7%]"
+  />
+
+  {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
+</section>
 
 <script>
   import { Modal } from "flowbite";

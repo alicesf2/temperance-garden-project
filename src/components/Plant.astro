@@ -1,19 +1,23 @@
 ---
+import { cx } from '../lib/utils';
+
 interface Props {
   id: string;
   imgSrc: string;
   imgWidth: number;
   modalTarget: string;
+  class?: string;
 }
 
-const { id, imgSrc, imgWidth, modalTarget } = Astro.props;
+const { id, imgSrc, imgWidth, modalTarget, class: className } = Astro.props;
 ---
 
 <button
   id={id}
-  class="plant"
+  class={cx("z-10", className)}
   data-modal-target={modalTarget}
   data-modal-toggle={modalTarget}
+  data-plant-btn
   type="button"
 >
   <img
@@ -22,3 +26,28 @@ const { id, imgSrc, imgWidth, modalTarget } = Astro.props;
     width={`${imgWidth}px`}
   />
 </button>
+
+<script>
+  const plants = document.querySelectorAll("[data-plant-btn]")
+  const plantModalCloseBtns = document.querySelectorAll("[data-modal-close-btn]")
+
+  plants.forEach(plant => (
+    plant.addEventListener("click", () => increaseZIndex(plant))
+  ))
+
+  plantModalCloseBtns.forEach(btn => (
+    btn.addEventListener("click", () => resetZIndex(plants))
+  ))
+
+  function increaseZIndex(plant: Element) {
+    plant.classList.remove("z-10")
+    plant.classList.add("z-1000")
+  }
+
+  function resetZIndex(plants: NodeListOf<Element>) {
+    plants.forEach(plant => {
+      plant.classList.remove("z-1000")
+      plant.classList.add("z-10")
+    })
+  }
+</script>

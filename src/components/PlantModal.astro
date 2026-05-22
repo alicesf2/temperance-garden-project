@@ -14,11 +14,11 @@ const { id, title, scientific, description } = Astro.props.plant;
   aria-hidden="true"
   class="
     fixed inset-x-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full
-    items-center justify-center overflow-x-hidden overflow-y-auto
+    items-end justify-center overflow-x-hidden overflow-y-auto pb-80
     md:inset-0
   "
 >
-  <div class="relative max-h-full w-full max-w-2xl p-4">
+  <div class="relative max-h-full w-full max-w-4xl p-4">
     <!-- Modal content -->
     <div
       class="
@@ -44,6 +44,7 @@ const { id, title, scientific, description } = Astro.props.plant;
             hover:bg-neutral-tertiary hover:text-heading
           "
           data-modal-hide={`${id}-modal`}
+          data-modal-close-btn
         >
           <svg
             class="size-5"
