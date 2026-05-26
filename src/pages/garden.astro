@@ -47,9 +47,15 @@ export interface Plant {
 
   {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
 
-  <div class="flex flex-row gap-4">
-    <button id="next">Next</button>
-    <button id="back">Back</button>
+  <div class="absolute top-[80%] left-1/2 flex -translate-x-1/2 flex-row gap-40">
+    <button id="back" class="
+      cursor-pointer rounded-3xl bg-amber-800 px-8 py-6 text-5xl text-white
+      outline-amber-800
+    ">Back</button>
+    <button id="back" class="
+      cursor-pointer rounded-3xl bg-amber-800 px-8 py-6 text-5xl text-white
+      outline-amber-800
+    ">Next</button>
   </div>
 </section>
 

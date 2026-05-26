@@ -42,12 +42,18 @@ const { id, imgSrc, imgWidth, modalTarget, class: className } = Astro.props;
   function increaseZIndex(plant: Element) {
     plant.classList.remove("z-10")
     plant.classList.add("z-1000")
+    
+    const plantImg = plant.querySelector("img")
+    plantImg?.classList.remove("animate-haloPulse")
   }
 
   function resetZIndex(plants: NodeListOf<Element>) {
     plants.forEach(plant => {
       plant.classList.remove("z-1000")
       plant.classList.add("z-10")
+
+      const plantImg = plant.querySelector("img")
+      plantImg?.classList.add("animate-haloPulse")
     })
   }
 </script>
