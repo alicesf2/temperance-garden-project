@@ -7,6 +7,6 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  site: "https://alicesf2.github.io/temperance-garden-project",
-  base: "/temperance-garden-project",
+  site: "https://sanctuary.ustreetcommunity.org",
+  base: "/",
 });
