@@ -6,6 +6,7 @@ import primrose from "../assets/primrose.png";
 import redbud from "../assets/redbud.png";
 import garden from "../assets/garden.png"
 import "../styles/global.css";
+import { cx } from '../lib/utils';
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
@@ -22,14 +23,15 @@ export interface Plant {
 ---
 
 <section class="relative h-screen w-screen items-center overflow-hidden p-6">
-  <h1 class="text-[80px]">TAG Sanctuary</h1>
-  <h4 class="text-5xl">Community Rewilding</h4>
+  <div id="narrative" class="absolute z-1000 text-5xl">
+    {
+      data.narrative.map((line: string, i: number) => (
+        <p id={`narrative-${i}`} class={i == 0 ? "visible" : "hidden"}>{line}</p>
+      ))
+    }
+  </div>
 
-  {data.narrative.map((line: string, i: number) => (
-    <p class="text-3xl">{line}</p>
-  ))}
-
-  <img src={garden.src} class="absolute inset-0 h-screen object-cover"/>
+  <img src={garden.src} class="absolute inset-0 h-screen w-full object-cover"/>
   <Plant
     id="primrose"
     imgSrc={primrose.src}
@@ -52,7 +54,7 @@ export interface Plant {
       cursor-pointer rounded-3xl bg-amber-800 px-8 py-6 text-5xl text-white
       outline-amber-800
     ">Back</button>
-    <button id="back" class="
+    <button id="next" class="
       cursor-pointer rounded-3xl bg-amber-800 px-8 py-6 text-5xl text-white
       outline-amber-800
     ">Next</button>
@@ -61,4 +63,22 @@ export interface Plant {
 
 <script>
   import { Modal } from "flowbite";
+  const nextBtn = document.getElementById("next");
+  const backBtn = document.getElementById("back");
+  const lines = document.querySelectorAll("#narrative p");
+
+  let activeIndex = 0;
+
+  nextBtn?.addEventListener("click", () => {
+    lines[activeIndex].classList.replace("visible", "hidden");
+    activeIndex = (activeIndex + 1) % lines.length;
+    lines[activeIndex].classList.replace('hidden', 'visible');
+   }
+  );
+
+  backBtn?.addEventListener("click", () => {
+    lines[activeIndex].classList.replace("visible", "hidden");
+    activeIndex = (activeIndex - 1 + lines.length) % lines.length;
+    lines[activeIndex].classList.replace('hidden', 'visible');
+  })
 </script>
