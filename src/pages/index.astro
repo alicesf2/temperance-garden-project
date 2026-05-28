@@ -1,42 +1,45 @@
 ---
+import Layout from "../layouts/Layout.astro";
 import archieml from "archieml";
 import gatesClosed from "../assets/gates-closed.png";
 import rightGate from "../assets/right-gate.png";
 import "../styles/global.css";
 ---
 
-<section id="landing" class="relative h-screen w-screen overflow-hidden">
-  <img id="img-gates-closed" src={gatesClosed.src} class="
-    absolute inset-0 h-screen w-screen object-cover opacity-100
-    transition-opacity duration-700
-  " />
-  <img id="img-gates-open" src={rightGate.src} class="
-    absolute inset-0 h-screen w-screen object-cover opacity-0 transition-opacity
-    duration-700
-  " />
-  <button
-    id="btn-enter"
-    type="button"
-    class="
-      absolute top-[75%] left-1/2 w-1/2 -translate-x-1/2 cursor-pointer
-      rounded-2xl bg-amber-900 p-4 text-center text-5xl text-white
-      outline-amber-900
-    "
-  >
-    Enter
-  </button>
-  <button
-    id="btn-exit"
-    type="button"
-    class="
-      absolute top-[80%] left-1/2 w-1/2 -translate-x-1/2 cursor-pointer
-      rounded-2xl bg-amber-900 p-4 text-center text-5xl text-white
-      outline-amber-900
-    "
-  >
-    Exit
-</button>
-</section>
+<Layout>
+  <section id="landing" class="relative h-screen w-screen overflow-hidden">
+    <img id="img-gates-closed" src={gatesClosed.src} class="
+      absolute inset-0 h-screen w-screen object-cover opacity-100
+      transition-opacity duration-700
+    " />
+    <img id="img-gates-open" src={rightGate.src} class="
+      absolute inset-0 h-screen w-screen object-cover opacity-0
+      transition-opacity duration-700
+    " />
+    <button
+      id="btn-enter"
+      type="button"
+      class="
+        absolute top-[75%] left-1/2 w-1/2 -translate-x-1/2 cursor-pointer
+        rounded-2xl bg-amber-900 p-4 text-center text-5xl text-white
+        outline-amber-900
+      "
+    >
+      Enter
+    </button>
+    <button
+      id="btn-exit"
+      type="button"
+      class="
+        absolute top-[80%] left-1/2 w-1/2 -translate-x-1/2 cursor-pointer
+        rounded-2xl bg-amber-900 p-4 text-center text-5xl text-white
+        outline-amber-900
+      "
+    >
+      Exit
+    </button>
+  </section>
+</Layout>
 
 <script>
   const enterBtn = document.getElementById("btn-enter");
