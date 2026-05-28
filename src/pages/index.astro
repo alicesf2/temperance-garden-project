@@ -16,28 +16,31 @@ import "../styles/global.css";
       absolute inset-0 h-screen w-screen object-cover opacity-0
       transition-opacity duration-700
     " />
-    <button
-      id="btn-enter"
-      type="button"
-      class="
-        absolute top-[75%] left-1/2 w-1/2 -translate-x-1/2 cursor-pointer
-        rounded-2xl bg-amber-900 p-4 text-center text-5xl text-white
-        outline-amber-900
-      "
-    >
-      Enter
-    </button>
-    <button
-      id="btn-exit"
-      type="button"
-      class="
-        absolute top-[80%] left-1/2 w-1/2 -translate-x-1/2 cursor-pointer
-        rounded-2xl bg-amber-900 p-4 text-center text-5xl text-white
-        outline-amber-900
-      "
-    >
-      Exit
-    </button>
+    <div class="
+      absolute bottom-[15%] left-1/2 flex w-full -translate-x-1/2 flex-col
+      items-center justify-center gap-4
+    ">
+      <button
+        id="btn-enter"
+        type="button"
+        class="
+          w-1/2 cursor-pointer rounded-2xl bg-amber-900 px-3 py-2 text-center
+          text-2xl text-white outline-amber-900
+        "
+      >
+        Enter
+      </button>
+      <button
+        id="btn-exit"
+        type="button"
+        class="
+          w-1/2 cursor-pointer rounded-2xl bg-amber-900 px-3 py-2 text-center
+          text-2xl text-white outline-amber-900
+        "
+      >
+        Exit
+      </button>
+    </div>
   </section>
 </Layout>
 
