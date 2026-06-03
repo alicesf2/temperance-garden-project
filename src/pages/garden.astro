@@ -6,6 +6,7 @@ import primrose from "../assets/primrose.png";
 import redbud from "../assets/redbud.png";
 import background from "../assets/red-background.png"
 import garden from "../assets/garden.png"
+import sign from "../assets/wooden-sign.png"
 import "../styles/global.css";
 import { cx } from '../lib/utils';
 
@@ -25,7 +26,8 @@ export interface Plant {
 
 <section class="relative h-screen w-screen items-center overflow-hidden p-6">
   <div id="narrative" class="
-    absolute top-[8%] left-1/2 z-1000 w-[90%] -translate-x-1/2 text-5xl
+    absolute top-[8%] left-1/2 z-1000 w-[90%] -translate-x-1/2 font-fauna
+    text-5xl font-semibold
   ">
     {
       data.narrative.map((line: string, i: number) => (
@@ -43,27 +45,28 @@ export interface Plant {
     imgSrc={primrose.src}
     imgWidth={175}
     modalTarget="primrose-modal"
-    class="absolute top-[50%]"
+    class="absolute top-[50%] [--glow-size:80px]"
   />
   <Plant
     id="eastern-redbud"
     imgSrc={redbud.src}
     imgWidth={800}
     modalTarget="eastern-redbud-modal"
-    class="absolute top-[20%] right-[-2.5%]"
+    class="absolute top-[20%] right-[-2.5%] [--glow-size:40px] [--glow-opacity:1] [--glow-inner:15px]" />"
   />
 
   {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
 
-  <div class="absolute top-[80%] left-1/2 flex -translate-x-1/2 flex-row gap-40">
-    <button id="back" class="
-      cursor-pointer rounded-3xl bg-amber-800 px-8 py-6 text-5xl text-white
-      outline-amber-800
-    ">Back</button>
-    <button id="next" class="
-      cursor-pointer rounded-3xl bg-amber-800 px-8 py-6 text-5xl text-white
-      outline-amber-800
-    ">Next</button>
+  <img src={sign.src} class="
+    absolute bottom-4 left-1/2 -translate-x-1/2 scale-50
+  "/>
+
+  <div class="
+    absolute top-[76.5%] left-1/2 flex -translate-x-1/2 flex-col gap-15
+    font-fauna
+  ">
+    <button id="next" class="cursor-pointer text-5xl font-semibold text-white">Next</button>
+    <button id="back" class="cursor-pointer text-5xl font-semibold text-white">Back</button>
   </div>
 </section>
 

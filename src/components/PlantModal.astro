@@ -1,5 +1,6 @@
 ---
 import type { Plant } from "../pages/index.astro";
+import "../styles/global.css";
 
 interface Props {
   plant: Plant;
@@ -23,19 +24,19 @@ const { id, title, scientific, description } = Astro.props.plant;
     <div
       class="
         relative rounded-base border border-default bg-neutral-primary-soft p-4
-        shadow-sm
+        font-fauna shadow-sm
         md:p-6
       "
     >
       <!-- Modal header -->
       <div
         class="
-          flex items-center justify-between gap-4 border-b border-default pb-4
+          flex items-center gap-8 border-b border-default pb-4
           md:pb-5
         "
       >
-        <h3 class="text-lg font-medium text-heading capitalize">{title}</h3>
-        <p class="text-sm">{scientific}</p>
+        <h3 class="text-5xl font-semibold text-heading capitalize">{title}</h3>
+        <p class="pt-2 text-3xl">{scientific}</p>
         <button
           type="button"
           class="
@@ -47,7 +48,7 @@ const { id, title, scientific, description } = Astro.props.plant;
           data-modal-close-btn
         >
           <svg
-            class="size-5"
+            class="size-10"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -72,7 +73,7 @@ const { id, title, scientific, description } = Astro.props.plant;
         space-y-4 py-4
         md:space-y-6 md:py-6
       ">
-        <p class="leading-relaxed text-body">
+        <p class="text-4xl/snug text-body">
           {description}
         </p>
       </div>

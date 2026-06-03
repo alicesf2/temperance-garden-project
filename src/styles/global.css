@@ -3,15 +3,25 @@
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 
+@theme {
+  --font-fauna: "Fauna One", serif;
+}
+
 @keyframes haloPulse {
   0% {
-    filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.5));
+    filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.3));
   }
   50% {
-    filter: drop-shadow(0 0 45px rgba(250, 204, 21, 1));
+    filter: drop-shadow(
+        0 0 var(--glow-size) rgba(250, 204, 21, var(--glow-opacity, 1))
+      )
+      drop-shadow(
+        0 0 var(--glow-inner, 30px) rgba(255, 230, 50, var(--glow-opacity, 1))
+      )
+      drop-shadow(0 0 4px rgba(255, 245, 150, 1));
   }
   100% {
-    filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.5));
+    filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.3));
   }
 }
 
