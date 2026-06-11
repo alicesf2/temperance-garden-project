@@ -38,7 +38,9 @@ import "../styles/global.css";
           text-2xl text-white outline-amber-900
         "
       >
-        Exit
+        <a href="ustreetcommunity.org">
+          Return to ustreet page
+        </a>
       </button>
     </div>
   </section>
@@ -51,11 +53,17 @@ import "../styles/global.css";
   const bgImage2 = document.getElementById("img-gates-open");
 
   enterBtn?.addEventListener("click", () => {
+    // Trigger gate animation
     bgImage?.classList.add("opacity-0")
     bgImage?.classList.remove("opacity-100")
 
     bgImage2?.classList.add("opacity-100")
     bgImage2?.classList.remove("opacity-0")
+
+    // Navigate to garden page
+    bgImage?.addEventListener("transitionend", () => {
+      window.location.href = "/garden"
+    }, {once: true})
   })
 
   exitBtn?.addEventListener("click", () => {

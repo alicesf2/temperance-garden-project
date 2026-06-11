@@ -6,6 +6,8 @@ import primrose from "../assets/primrose.png";
 import redbud from "../assets/redbud.png";
 import background from "../assets/red-background.png"
 import garden from "../assets/garden.png"
+import next from "../assets/next.png"
+import back from "../assets/back.png"
 import sign from "../assets/wooden-sign.png"
 import "../styles/global.css";
 import { cx } from '../lib/utils';
@@ -52,21 +54,20 @@ export interface Plant {
     imgSrc={redbud.src}
     imgWidth={800}
     modalTarget="eastern-redbud-modal"
-    class="absolute top-[20%] right-[-2.5%] [--glow-size:40px] [--glow-opacity:1] [--glow-inner:15px]" />"
+    class="
+      absolute top-[20%] right-[-2.5%] [--glow-inner:15px] [--glow-opacity:1]
+      [--glow-size:40px]
+    "
   />
 
   {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
 
-  <img src={sign.src} class="
-    absolute bottom-4 left-1/2 -translate-x-1/2 scale-50
-  "/>
-
   <div class="
-    absolute top-[76.5%] left-1/2 flex -translate-x-1/2 flex-col gap-15
+    absolute top-[76.5%] left-1/2 flex w-[90%] -translate-x-1/2 flex-row gap-8
     font-fauna
   ">
-    <button id="next" class="cursor-pointer text-5xl font-semibold text-white">Next</button>
-    <button id="back" class="cursor-pointer text-5xl font-semibold text-white">Back</button>
+    <button id="back" class="cursor-pointer"><img class="scale-80" src={back.src}/></button>
+    <button id="next" class="cursor-pointer"><img class="scale-80" src={next.src}/></button>
   </div>
 </section>
 
@@ -86,8 +87,13 @@ export interface Plant {
   );
 
   backBtn?.addEventListener("click", () => {
+    if (activeIndex === 0) {
+      window.location.href = "/"
+      return;
+    }
+
     lines[activeIndex].classList.replace("visible", "hidden");
-    activeIndex = (activeIndex - 1 + lines.length) % lines.length;
+    activeIndex -= 1;
     lines[activeIndex].classList.replace('hidden', 'visible');
   })
 </script>
