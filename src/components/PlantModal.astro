@@ -1,30 +1,33 @@
 ---
-import type { Plant } from "../pages/index.astro";
+import type { Plant } from "../pages/garden.astro";
 import "../styles/global.css";
+import { cx } from "../lib/utils";
 
 interface Props {
   plant: Plant;
 }
 
-const { id, title, scientific, description } = Astro.props.plant;
+const { id, title, scientific, description, modalPosition } = Astro.props.plant;
 ---
 
 <div
   id={`${id}-modal`}
   tabindex="-1"
   aria-hidden="true"
-  class="
-    fixed inset-x-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full
-    items-end justify-center overflow-x-hidden overflow-y-auto pb-80
-    md:inset-0
-  "
+  class={cx(
+    `
+      fixed inset-x-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full
+      items-end justify-center overflow-x-hidden overflow-y-auto
+      md:inset-0
+    `, modalPosition === "top" ? "pb-[90%]" : "pb-30")
+  }
 >
   <div class="relative max-h-full w-full max-w-4xl p-4">
     <!-- Modal content -->
     <div
       class="
         relative rounded-base border border-default bg-neutral-primary-soft p-4
-        font-fauna shadow-sm
+        font-narrative shadow-sm
         md:p-6
       "
     >
@@ -35,8 +38,8 @@ const { id, title, scientific, description } = Astro.props.plant;
           md:pb-5
         "
       >
-        <h3 class="text-5xl font-semibold text-heading capitalize">{title}</h3>
-        <p class="pt-2 text-3xl">{scientific}</p>
+        <h3 class="text-2xl font-semibold text-heading capitalize">{title}</h3>
+        <p class="text-lg">{scientific}</p>
         <button
           type="button"
           class="
@@ -73,7 +76,7 @@ const { id, title, scientific, description } = Astro.props.plant;
         space-y-4 py-4
         md:space-y-6 md:py-6
       ">
-        <p class="text-4xl/snug text-body">
+        <p class="text-2xl/snug text-body">
           {description}
         </p>
       </div>
