@@ -2,8 +2,12 @@
 import Layout from "../layouts/Layout.astro";
 import archieml from "archieml";
 import gatesClosed from "../assets/gates-closed.png";
-import rightGate from "../assets/right-gate.png";
+import gatesOpen from "../assets/gates-open.png";
 import ustreetLogo from "../assets/ustreet-logo.png";
+import viggy from "../assets/viggy.png";
+import speechBubble from "../assets/speech-bubble.png";
+import back from "../assets/back.png"
+import next from "../assets/next.png"
 import "../styles/global.css";
 
 // Load data from TAG google doc
@@ -19,7 +23,7 @@ const data = archieml.load(text);
       absolute inset-0 h-screen w-screen object-cover opacity-100
       transition-opacity duration-700
     " />
-    <img id="img-gates-open" src={rightGate.src} class="
+    <img id="img-gates-open" src={gatesOpen.src} class="
       absolute inset-0 h-screen w-screen object-cover opacity-0
       transition-opacity duration-700
     " />
@@ -28,52 +32,31 @@ const data = archieml.load(text);
         <img class="w-12" src={ustreetLogo.src} />
       </a>
     </div>
-    <div id="narrative" class="
-      absolute bottom-48 left-1/2 z-1000 w-[90%] -translate-x-1/2 font-narrative
-      text-4xl/6
-    ">
-      {
-        data.narrative.map((line: string, i: number) => (
-          <p id={`narrative-${i}`} class={i == 0 ? "visible" : "hidden"}>{line}</p>
-        ))
-      }
+    <!-- Narrative Section -->
+    <div class="absolute bottom-32 flex flex-row items-center p-4">
+      <img src={viggy.src} width={85} />
+      <div id="narrative-wrapper" class="relative">
+        <img src={speechBubble.src} class="w-full" />
+        <div id="narrative" class="
+          absolute inset-0 ml-8 p-3 font-narrative text-2xl/6
+        ">
+          {
+            data.narrative.map((line: string, i: number) => (
+              <p id={`narrative-${i}`} class={i == 0 ? "visible" : "hidden"}>{line}</p>
+            ))
+          }
+        </div>
+      </div>
     </div>
     <button id="btn-start" type="button" class="
-      absolute bottom-24 left-1/2 -translate-x-1/2 px-4 py-3 outline
+      absolute bottom-12 left-1/2 -translate-x-1/2 px-4 py-3 outline
     ">Start</button>
     <div id="btn-container" class="
-      absolute bottom-24 left-1/2 hidden -translate-x-1/2 flex-row gap-4
+      absolute bottom-12 left-1/2 hidden -translate-x-1/2 flex-row gap-4
     ">
-      <button id="btn-back" type="button" class="px-4 py-3 outline">Back</button>
-      <button id="btn-next" type="button" class="px-4 py-3 outline">Next</button>
+      <button id="btn-back" type="button"><img src={back.src} class="scale-50" /></button>
+      <button id="btn-next" type="button"><img src={next.src} class="scale-50" /></button>
     </div>
-    <!-- <div class="
-      absolute bottom-[15%] left-1/2 flex w-full -translate-x-1/2 flex-col
-      items-center justify-center gap-4
-    ">
-      <button
-        id="btn-enter"
-        type="button"
-        class="
-          w-1/2 cursor-pointer rounded-2xl bg-amber-900 px-3 py-2 text-center
-          text-2xl text-white outline-amber-900
-        "
-      >
-        Enter
-      </button>
-      <button
-        id="btn-exit"
-        type="button"
-        class="
-          w-1/2 cursor-pointer rounded-2xl bg-amber-900 px-3 py-2 text-center
-          text-2xl text-white outline-amber-900
-        "
-      >
-        <a href="https://ustreetcommunity.org">
-          Return to ustreet page
-        </a>
-      </button>
-    </div> -->
   </section>
 </Layout>
 
