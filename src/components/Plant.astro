@@ -23,7 +23,7 @@ const { id, imgSrc, imgWidth, modalTarget, class: className } = Astro.props;
 >
   <img
     src={imgSrc}
-    class="animate-haloPulse cursor-pointer"
+    class="animate-sway cursor-pointer"
     width={`${imgWidth}px`}
   />
 </button>
@@ -45,7 +45,7 @@ const { id, imgSrc, imgWidth, modalTarget, class: className } = Astro.props;
     plant.classList.add("z-1000")
     
     const plantImg = plant.querySelector("img")
-    plantImg?.classList.remove("animate-haloPulse")
+    plantImg?.classList.remove("animate-sway")
   }
 
   function resetZIndex(plants: NodeListOf<Element>) {
