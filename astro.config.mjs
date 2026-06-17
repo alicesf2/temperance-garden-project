@@ -11,9 +11,24 @@ export default defineConfig({
   base: "/",
   fonts: [
     {
-      provider: fontProviders.google(),
-      name: "Fauna One",
-      cssVariable: "--font-fauna",
+      provider: fontProviders.fontsource(),
+      name: "Mansalva",
+      cssVariable: "--font-mansalva",
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Walter Turncoat",
+      cssVariable: "--font-turncoat",
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "East Sea Dokdo",
+      cssVariable: "--font-dokdo",
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Lacquer",
+      cssVariable: "--font-lacquer",
     },
   ],
 });

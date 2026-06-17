@@ -3,8 +3,8 @@
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 
-@theme {
-  --font-fauna: "Fauna One", serif;
+@theme inline {
+  --font-narrative: var(--font-dokdo);
 }
 
 @keyframes haloPulse {
