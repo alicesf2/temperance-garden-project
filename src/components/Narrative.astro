@@ -1,0 +1,32 @@
+---
+import { cx } from "../lib/utils";
+import keykye from "../assets/keykye.png"
+import speechBubble from "../assets/speech-bubble.png"
+
+interface Props {
+    narrative: string[];
+    position: "top"|"bottom";
+}
+
+const {narrative, position} = Astro.props;
+---
+
+<div id="narrative-wrapper" class={cx(`
+  absolute left-1/2 flex w-full -translate-x-1/2 flex-row items-center p-4
+`, position === "top" ? `top-8` : `bottom-32`)}>
+    <img src={keykye.src} width={85} />
+    <div id="narrative-speech" class="relative">
+        <img src={speechBubble.src} class="w-full" />
+        <div id="narrative" class="
+          absolute inset-0 ml-8 p-3 font-narrative text-2xl/6
+        ">
+            {
+                narrative.map((line: string, i: number) => (
+                    <p id={`narrative-${i}`} class={i == 0 ? "visible" : `
+                      hidden
+                    `}>{line}</p>
+                ))
+            }
+        </div>
+    </div>
+</div>

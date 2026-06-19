@@ -9,12 +9,14 @@ import garden from "../assets/garden.png"
 import "../styles/global.css";
 import { cx } from '../lib/utils';
 import Layout from "../layouts/Layout.astro";
+import Narrative from "../components/Narrative.astro";
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
 const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
 const text = await fetch(url).then((res) => res.text());
 const data = archieml.load(text);
+const gardenNarrative = data.narrative[data.narrative.length - 1];
 
 export interface Plant {
   id: string;
@@ -22,6 +24,7 @@ export interface Plant {
   scientific: string;
   description: string;
   modalPosition: "top"|"bottom";
+  gifts: string[];
 }
 ---
 
@@ -30,6 +33,8 @@ export interface Plant {
 
     <img src={background.src} class="absolute inset-0 h-screen object-cover"/>
     <img src={garden.src} class="absolute top-[18%] left-1/2 -translate-x-1/2" />
+
+    <Narrative narrative={[gardenNarrative]} position="top" />
     <Plant
       id="primrose"
       imgSrc={primrose.src}
@@ -52,9 +57,17 @@ export interface Plant {
     />
 
     {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
+    <button id="btn-exit" class="
+      absolute bottom-24 left-1/2 -translate-x-1/2 px-4 py-3 outline
+    ">Exit</button>
   </section>
 </Layout>
 
 <script>
   import { Modal } from "flowbite";
+
+  const exitBtn = document.getElementById("btn-exit");
+  exitBtn?.addEventListener("click", () => {
+    window.location.href = "/"
+  })
 </script>

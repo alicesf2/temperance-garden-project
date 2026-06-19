@@ -7,7 +7,7 @@ interface Props {
   plant: Plant;
 }
 
-const { id, title, scientific, description, modalPosition } = Astro.props.plant;
+const { id, title, scientific, description, modalPosition, gifts } = Astro.props.plant;
 ---
 
 <div
@@ -79,6 +79,12 @@ const { id, title, scientific, description, modalPosition } = Astro.props.plant;
         <p class="text-2xl/snug text-body">
           {description}
         </p>
+        <span class="text-2xl/snug text-body">Gifts: </span>
+        {gifts.map((gift, i) => (
+          <span class="inline text-2xl/snug text-body">
+            {gift}{i < gifts.length - 1 && ", "}
+          </span>
+        ))}
       </div>
     </div>
   </div>

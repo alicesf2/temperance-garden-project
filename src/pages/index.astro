@@ -4,11 +4,12 @@ import archieml from "archieml";
 import gatesClosed from "../assets/gates-closed.png";
 import gatesOpen from "../assets/gates-open.png";
 import ustreetLogo from "../assets/ustreet-logo.png";
-import viggy from "../assets/viggy.png";
-import speechBubble from "../assets/speech-bubble.png";
+import start from "../assets/start.png";
 import back from "../assets/back.png"
 import next from "../assets/next.png"
+import enter from "../assets/enter.png"
 import "../styles/global.css";
+import Narrative from "../components/Narrative.astro";
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
@@ -19,6 +20,7 @@ const data = archieml.load(text);
 
 <Layout>
   <section id="landing" class="relative h-screen w-screen overflow-hidden">
+    <!-- Background images -->
     <img id="img-gates-closed" src={gatesClosed.src} class="
       absolute inset-0 h-screen w-screen object-cover opacity-100
       transition-opacity duration-700
@@ -27,35 +29,33 @@ const data = archieml.load(text);
       absolute inset-0 h-screen w-screen object-cover opacity-0
       transition-opacity duration-700
     " />
-    <div class="absolute top-5 left-5">
-      <a href="https://ustreetcommunity.org">
-        <img class="w-12" src={ustreetLogo.src} />
-      </a>
-    </div>
-    <!-- Narrative Section -->
-    <div class="absolute bottom-32 flex flex-row items-center p-4">
-      <img src={viggy.src} width={85} />
-      <div id="narrative-wrapper" class="relative">
-        <img src={speechBubble.src} class="w-full" />
-        <div id="narrative" class="
-          absolute inset-0 ml-8 p-3 font-narrative text-2xl/6
-        ">
-          {
-            data.narrative.map((line: string, i: number) => (
-              <p id={`narrative-${i}`} class={i == 0 ? "visible" : "hidden"}>{line}</p>
-            ))
-          }
-        </div>
+    <!-- Ustreet logo and next event -->
+    <div class="absolute top-5 left-5 flex flex-row gap-4">
+      <div>
+        <a href="https://ustreetcommunity.org">
+          <img class="w-12" src={ustreetLogo.src} />
+        </a>
+      </div>
+      <div>
+        <p class="mb-0 font-narrative text-xl">Next Event:</p>
+        <a href="https://www.ustreetcommunity.org/events/summer-solstice-seedling-soiree">
+          <p class="font-narrative text-xl underline">June 21</p>
+        </a>
       </div>
     </div>
+    <!-- Narrative and navigation buttons -->
+    <Narrative narrative={data.narrative} position="bottom"/>
     <button id="btn-start" type="button" class="
-      absolute bottom-12 left-1/2 -translate-x-1/2 px-4 py-3 outline
-    ">Start</button>
+      absolute bottom-12 left-1/2 -translate-x-1/2 scale-75
+    "><img src={start.src} /></button>
     <div id="btn-container" class="
-      absolute bottom-12 left-1/2 hidden -translate-x-1/2 flex-row gap-4
+      absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-row gap-8
     ">
-      <button id="btn-back" type="button"><img src={back.src} class="scale-50" /></button>
-      <button id="btn-next" type="button"><img src={next.src} class="scale-50" /></button>
+      <button id="btn-back" type="button"><img src={back.src} class="scale-75" /></button>
+      <button id="btn-next" type="button"><img src={next.src} class="scale-75" /></button>
+      <button id="btn-enter" type="button" class="hidden"><img src={enter.src} class="
+        scale-75
+      "></button>
     </div>
   </section>
 </Layout>
@@ -70,6 +70,7 @@ const data = archieml.load(text);
   const btnContainer = document.getElementById("btn-container")
   const nextBtn = document.getElementById("btn-next");
   const backBtn = document.getElementById("btn-back");
+  const enterBtn = document.getElementById("btn-enter");
   const lines = document.querySelectorAll("#narrative p");
 
   let activeIndex = 0;
@@ -87,35 +88,45 @@ const data = archieml.load(text);
   })
 
   nextBtn?.addEventListener("click", () => {
-    if (nextBtn.textContent === "Enter") {
-      // Trigger gate animation
-      bgImage?.classList.add("opacity-0")
-      bgImage?.classList.remove("opacity-100")
-
-      bgImage2?.classList.add("opacity-100")
-      bgImage2?.classList.remove("opacity-0")
-
-      // Navigate to garden page
-      bgImage?.addEventListener("transitionend", () => {
-        window.location.href = "/garden"
-      }, {once: true})
-    }
-
     lines[activeIndex].classList.replace("visible", "hidden");
     activeIndex += 1;
     lines[activeIndex].classList.replace("hidden", "visible");
 
     if (activeIndex === lines.length - 1) {
-      nextBtn.textContent = "Enter"
+      nextBtn.classList.add("hidden");
+      enterBtn?.classList.remove("hidden");
     }
    }
   );
+
+  enterBtn?.addEventListener("click", () => {
+    // Trigger gate animation
+    bgImage?.classList.add("opacity-0")
+    bgImage?.classList.remove("opacity-100")
+
+    bgImage2?.classList.add("opacity-100")
+    bgImage2?.classList.remove("opacity-0")
+
+    // Hide narrative section
+    const narrativeWrapper = document.getElementById("narrative-wrapper");
+    narrativeWrapper?.classList.add("hidden");
+
+    // Navigate to garden page
+    bgImage?.addEventListener("transitionend", () => {
+      window.location.href = "/garden"
+    }, {once: true})
+  })
 
   backBtn?.addEventListener("click", () => {
     if (activeIndex === 1) {
       startBtn?.classList.remove("hidden")
       btnContainer?.classList.remove("flex")
       btnContainer?.classList.add("hidden")
+    }
+
+    if (activeIndex === lines.length - 1) {
+      enterBtn?.classList.add("hidden");
+      nextBtn?.classList.remove("hidden");
     }
 
     lines[activeIndex].classList.replace("visible", "hidden");
