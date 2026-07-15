@@ -16,9 +16,9 @@ const {narrative, position} = Astro.props;
 `, position === "top" ? `top-8` : `bottom-32`)}>
     <img src={keykye.src} width={85} />
     <div id="narrative-speech" class="relative">
-        <img src={speechBubble.src} class="w-full" />
+        <img src={speechBubble.src} class="w-full scale-105" />
         <div id="narrative" class="
-          absolute inset-0 ml-8 p-3 font-narrative text-2xl/6
+          absolute inset-0 ml-8 p-3 font-narrative text-3xl/6
         ">
             {
                 narrative.map((line: string, i: number) => (

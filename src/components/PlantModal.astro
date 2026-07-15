@@ -2,25 +2,25 @@
 import type { Plant } from "../pages/garden.astro";
 import "../styles/global.css";
 import { cx } from "../lib/utils";
+import { resetPlant } from "../utils/plant";
 
 interface Props {
   plant: Plant;
 }
 
-const { id, title, scientific, description, modalPosition, gifts } = Astro.props.plant;
+const { id, title, scientific, description, gifts } = Astro.props.plant;
 ---
 
 <div
   id={`${id}-modal`}
   tabindex="-1"
   aria-hidden="true"
-  class={cx(
-    `
-      fixed inset-x-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full
-      items-end justify-center overflow-x-hidden overflow-y-auto
-      md:inset-0
-    `, modalPosition === "top" ? "pb-[90%]" : "pb-30")
-  }
+  class="
+    fixed inset-x-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full
+    items-end justify-center overflow-x-hidden overflow-y-auto
+    md:inset-0
+  "
+  data-plant-id={id}
 >
   <div class="relative max-h-full w-full max-w-4xl p-4">
     <!-- Modal content -->
@@ -38,8 +38,8 @@ const { id, title, scientific, description, modalPosition, gifts } = Astro.props
           md:pb-5
         "
       >
-        <h3 class="text-2xl font-semibold text-heading capitalize">{title}</h3>
-        <p class="text-lg">{scientific}</p>
+        <h3 class="text-3xl font-semibold text-heading capitalize">{title}</h3>
+        <p class="text-2xl italic">{scientific}</p>
         <button
           type="button"
           class="
@@ -47,8 +47,8 @@ const { id, title, scientific, description, modalPosition, gifts } = Astro.props
             justify-center rounded-base bg-transparent text-sm text-body
             hover:bg-neutral-tertiary hover:text-heading
           "
-          data-modal-hide={`${id}-modal`}
           data-modal-close-btn
+          data-plant-id={id}
         >
           <svg
             class="size-10"
@@ -76,12 +76,12 @@ const { id, title, scientific, description, modalPosition, gifts } = Astro.props
         space-y-4 py-4
         md:space-y-6 md:py-6
       ">
-        <p class="text-2xl/snug text-body">
+        <p class="text-3xl/snug text-body">
           {description}
         </p>
-        <span class="text-2xl/snug text-body">Gifts: </span>
+        <span class="text-3xl/snug text-body">Gifts: </span>
         {gifts.map((gift, i) => (
-          <span class="inline text-2xl/snug text-body">
+          <span class="inline text-3xl/snug text-body">
             {gift}{i < gifts.length - 1 && ", "}
           </span>
         ))}

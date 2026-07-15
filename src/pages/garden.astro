@@ -10,13 +10,13 @@ import "../styles/global.css";
 import { cx } from '../lib/utils';
 import Layout from "../layouts/Layout.astro";
 import Narrative from "../components/Narrative.astro";
+import back from "../assets/back.png"
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
 const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
 const text = await fetch(url).then((res) => res.text());
 const data = archieml.load(text);
-const gardenNarrative = data.narrative[data.narrative.length - 1];
 
 export interface Plant {
   id: string;
@@ -34,12 +34,13 @@ export interface Plant {
     <img src={background.src} class="absolute inset-0 h-screen object-cover"/>
     <img src={garden.src} class="absolute top-[18%] left-1/2 -translate-x-1/2" />
 
-    <Narrative narrative={[gardenNarrative]} position="top" />
+    <Narrative narrative={[data.gardenCta]} position="top" />
+
+    <!-- Hard-code each plant element due to variations in sizing and styling -->
     <Plant
       id="primrose"
       imgSrc={primrose.src}
       imgWidth={175}
-      modalTarget="primrose-modal"
       class="
         absolute top-[45%] left-[-10%] scale-40 [--glow-opacity:0.5]
         [--glow-size:60px]
@@ -49,25 +50,78 @@ export interface Plant {
       id="eastern-redbud"
       imgSrc={redbud.src}
       imgWidth={800}
-      modalTarget="eastern-redbud-modal"
       class="
         absolute top-[20%] right-[-2.5%] scale-70 [--glow-inner:15px]
         [--glow-opacity:0.3] [--glow-size:30px]
       "
     />
 
+    <!-- Render plant modal elements -->
     {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
-    <button id="btn-exit" class="
-      absolute bottom-24 left-1/2 -translate-x-1/2 px-4 py-3 outline
-    ">Exit</button>
+
+    <button id="btn-back" type="button" class="
+      absolute bottom-8 left-1/2 -translate-x-1/2
+    "><img src={back.src} class="scale-50" /></button>
   </section>
 </Layout>
 
 <script>
-  import { Modal } from "flowbite";
+  import { initModals, Modal } from "flowbite";
+  import type { ModalOptions, ModalInterface } from 'flowbite';
+  import type { InstanceOptions } from 'flowbite';
+  import { clickPlant, resetPlant } from "../utils/plant.ts";
 
-  const exitBtn = document.getElementById("btn-exit");
-  exitBtn?.addEventListener("click", () => {
+  const backBtn = document.getElementById("btn-back");
+  backBtn?.addEventListener("click", () => {
     window.location.href = "/"
   })
+
+  const plants = document.querySelectorAll<HTMLElement>("[data-plant-btn]");
+  const plantModalEls = document.querySelectorAll<HTMLElement>('[id$="-modal"]') // HTML elements
+  const plantModalDict = new Map<string, ModalInterface>();
+  const plantModalCloseBtns = document.querySelectorAll<HTMLElement>("[data-modal-close-btn]")
+
+  const modalOptions: ModalOptions = {
+    onShow: () => {
+      console.log('modal is shown');
+    },
+    onHide: () => {
+      console.log('modal is hidden');
+    },
+  };
+  
+  // Instantiate all plant modals and store reference to them in dict plantModals
+  // Each entry looks like <{plantId}-modal, modalEl>
+  plantModalEls.forEach(modalEl => {
+    const modal = new Modal(modalEl, modalOptions)
+    const plantId = modalEl.dataset.plantId
+    if (plantId) {
+      plantModalDict.set(`${plantId}-modal`, modal)
+    }
+  })
+  
+  // Add click handler to each plant image
+  plants.forEach(plant => (
+    plant.addEventListener("click", () => {
+      clickPlant(plant);
+      const plantId = plant.getAttribute("id")
+      plantModalDict.get(`${plantId}-modal`)?.show()
+    })
+  ))
+
+  // Add click handler to each modal close button
+  plantModalCloseBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const plantId = btn.dataset.plantId;
+      if (plantId) {
+        plantModalDict.get(`${plantId}-modal`)?.hide()
+        resetPlant(plantId)
+      }
+    })
+  })
+
+
+  // plantModals.forEach((modalEl) => {
+  //   const modal: ModalInterface = new Modal(modalEl, modalOptions);
+  // });
 </script>
