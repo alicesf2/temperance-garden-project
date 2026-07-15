@@ -2,15 +2,13 @@
 import archieml from "archieml";
 import Plant from "../components/Plant.astro";
 import PlantModal from "../components/PlantModal.astro";
-import primrose from "../assets/primrose.png";
-import redbud from "../assets/redbud.png";
 import background from "../assets/red-background.png"
 import garden from "../assets/garden.png"
 import "../styles/global.css";
-import { cx } from '../lib/utils';
 import Layout from "../layouts/Layout.astro";
 import Narrative from "../components/Narrative.astro";
 import back from "../assets/back.png"
+import { plants } from "../utils/plants";
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
@@ -35,26 +33,17 @@ export interface Plant {
     <img src={garden.src} class="absolute top-[18%] left-1/2 -translate-x-1/2" />
 
     <Narrative narrative={[data.gardenCta]} position="top" />
-
-    <!-- Hard-code each plant element due to variations in sizing and styling -->
-    <Plant
-      id="primrose"
-      imgSrc={primrose.src}
-      imgWidth={175}
-      class="
-        absolute top-[45%] left-[-10%] scale-40 [--glow-opacity:0.5]
-        [--glow-size:60px]
-      "
-    />
-    <Plant
-      id="eastern-redbud"
-      imgSrc={redbud.src}
-      imgWidth={800}
-      class="
-        absolute top-[20%] right-[-2.5%] scale-70 [--glow-inner:15px]
-        [--glow-opacity:0.3] [--glow-size:30px]
-      "
-    />
+    
+    <!-- Render clickable plant images -->
+    {plants.map(plant => (
+      <Plant
+        id={plant.id}
+        imgSrc={plant.imgSrc}
+        imgWidth={plant.imgWidth}
+        class={plant.class}
+        modalTarget={`${plant.id}-modal`}
+      />
+    ))}
 
     <!-- Render plant modal elements -->
     {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
@@ -66,62 +55,20 @@ export interface Plant {
 </Layout>
 
 <script>
-  import { initModals, Modal } from "flowbite";
-  import type { ModalOptions, ModalInterface } from 'flowbite';
-  import type { InstanceOptions } from 'flowbite';
-  import { clickPlant, resetPlant } from "../utils/plant.ts";
+  import { Modal } from "flowbite";
 
   const backBtn = document.getElementById("btn-back");
   backBtn?.addEventListener("click", () => {
     window.location.href = "/"
   })
 
-  const plants = document.querySelectorAll<HTMLElement>("[data-plant-btn]");
-  const plantModalEls = document.querySelectorAll<HTMLElement>('[id$="-modal"]') // HTML elements
-  const plantModalDict = new Map<string, ModalInterface>();
-  const plantModalCloseBtns = document.querySelectorAll<HTMLElement>("[data-modal-close-btn]")
 
-  const modalOptions: ModalOptions = {
-    onShow: () => {
-      console.log('modal is shown');
-    },
-    onHide: () => {
-      console.log('modal is hidden');
-    },
-  };
+  const plantImgs = document.querySelectorAll<HTMLElement>("[data-plant-btn] > img");
   
-  // Instantiate all plant modals and store reference to them in dict plantModals
-  // Each entry looks like <{plantId}-modal, modalEl>
-  plantModalEls.forEach(modalEl => {
-    const modal = new Modal(modalEl, modalOptions)
-    const plantId = modalEl.dataset.plantId
-    if (plantId) {
-      plantModalDict.set(`${plantId}-modal`, modal)
-    }
-  })
-  
-  // Add click handler to each plant image
-  plants.forEach(plant => (
-    plant.addEventListener("click", () => {
-      clickPlant(plant);
-      const plantId = plant.getAttribute("id")
-      plantModalDict.get(`${plantId}-modal`)?.show()
+  // Remove swaying animation when plant clicked
+  plantImgs.forEach(plantImg => (
+    plantImg.addEventListener("click", () => {
+      plantImg.classList.remove("animate-sway")
     })
   ))
-
-  // Add click handler to each modal close button
-  plantModalCloseBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const plantId = btn.dataset.plantId;
-      if (plantId) {
-        plantModalDict.get(`${plantId}-modal`)?.hide()
-        resetPlant(plantId)
-      }
-    })
-  })
-
-
-  // plantModals.forEach((modalEl) => {
-  //   const modal: ModalInterface = new Modal(modalEl, modalOptions);
-  // });
 </script>

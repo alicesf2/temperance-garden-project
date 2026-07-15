@@ -29,6 +29,7 @@ const data = archieml.load(text);
       absolute inset-0 h-screen w-screen object-cover opacity-0
       transition-opacity duration-700
     " />
+
     <!-- Ustreet logo and next event -->
     <div class="absolute top-5 left-5 flex flex-row gap-4">
       <div>
@@ -42,6 +43,7 @@ const data = archieml.load(text);
         </a>
       </div>
     </div>
+    
     <!-- Narrative and navigation buttons -->
     <Narrative narrative={data.narrative} position="bottom"/>
     <button id="btn-start" type="button" class="
@@ -60,8 +62,6 @@ const data = archieml.load(text);
 </Layout>
 
 <script>
-  // const enterBtn = document.getElementById("btn-enter");
-  // const exitBtn = document.getElementById("btn-exit")
   const bgImage = document.getElementById("img-gates-closed");
   const bgImage2 = document.getElementById("img-gates-open");
 
@@ -132,26 +132,4 @@ const data = archieml.load(text);
     activeIndex -= 1;
     lines[activeIndex].classList.replace('hidden', 'visible');
   })
-
-  // enterBtn?.addEventListener("click", () => {
-  //   // Trigger gate animation
-  //   bgImage?.classList.add("opacity-0")
-  //   bgImage?.classList.remove("opacity-100")
-
-  //   bgImage2?.classList.add("opacity-100")
-  //   bgImage2?.classList.remove("opacity-0")
-
-  //   // Navigate to garden page
-  //   bgImage?.addEventListener("transitionend", () => {
-  //     window.location.href = "/garden"
-  //   }, {once: true})
-  // })
-
-  // exitBtn?.addEventListener("click", () => {
-  //   bgImage2?.classList.remove("opacity-100")
-  //   bgImage2?.classList.add("opacity-0")
-
-  //   bgImage?.classList.remove("opacity-0")
-  //   bgImage?.classList.add("opacity-100")
-  // })
 </script>

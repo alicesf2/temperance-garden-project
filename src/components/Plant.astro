@@ -7,20 +7,23 @@ interface Props {
   imgSrc: string;
   imgWidth: number;
   class?: string;
+  modalTarget?: string;
 }
 
-const { id, imgSrc, imgWidth, class: className } = Astro.props;
+const { id, imgSrc, imgWidth, class: className, modalTarget } = Astro.props;
 ---
 
 <button
-  id={id}
+  id={`${id}-btn`}
   class={cx("z-10", className)}
+  data-modal-target={modalTarget}
+  data-modal-toggle={modalTarget}
   data-plant-btn
   type="button"
 >
   <img
     src={imgSrc}
-    class="animate-sway cursor-pointer"
+    class={cx("cursor-pointer", modalTarget && "animate-sway")}
     width={`${imgWidth}px`}
   />
 </button>

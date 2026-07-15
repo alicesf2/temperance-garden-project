@@ -1,14 +1,15 @@
 ---
-import type { Plant } from "../pages/garden.astro";
+import type { Plant as PlantType } from "../pages/garden.astro";
+import Plant from "../components/Plant.astro"
 import "../styles/global.css";
-import { cx } from "../lib/utils";
-import { resetPlant } from "../utils/plant";
+import { plants } from "../utils/plants";
 
 interface Props {
-  plant: Plant;
+  plant: PlantType;
 }
 
 const { id, title, scientific, description, gifts } = Astro.props.plant;
+const activePlant = plants.find(plant => plant.id === id);
 ---
 
 <div
@@ -17,10 +18,9 @@ const { id, title, scientific, description, gifts } = Astro.props.plant;
   aria-hidden="true"
   class="
     fixed inset-x-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full
-    items-end justify-center overflow-x-hidden overflow-y-auto
+    justify-center overflow-x-hidden overflow-y-auto
     md:inset-0
   "
-  data-plant-id={id}
 >
   <div class="relative max-h-full w-full max-w-4xl p-4">
     <!-- Modal content -->
@@ -34,12 +34,16 @@ const { id, title, scientific, description, gifts } = Astro.props.plant;
       <!-- Modal header -->
       <div
         class="
-          flex items-center gap-8 border-b border-default pb-4
+          flex items-start gap-8 border-b border-default pb-4
           md:pb-5
         "
       >
-        <h3 class="text-3xl font-semibold text-heading capitalize">{title}</h3>
-        <p class="text-2xl italic">{scientific}</p>
+        <div>
+          <h3 class="
+            text-4xl font-semibold whitespace-nowrap text-heading capitalize
+          ">{title}</h3>
+          <p class="text-3xl whitespace-nowrap italic">{scientific}</p>
+        </div>
         <button
           type="button"
           class="
@@ -47,8 +51,7 @@ const { id, title, scientific, description, gifts } = Astro.props.plant;
             justify-center rounded-base bg-transparent text-sm text-body
             hover:bg-neutral-tertiary hover:text-heading
           "
-          data-modal-close-btn
-          data-plant-id={id}
+          data-modal-hide={`${id}-modal`}
         >
           <svg
             class="size-10"
@@ -73,18 +76,28 @@ const { id, title, scientific, description, gifts } = Astro.props.plant;
       </div>
       <!-- Modal body -->
       <div class="
-        space-y-4 py-4
-        md:space-y-6 md:py-6
+        flex flex-col items-center space-y-2 py-2
+        md:space-y-4 md:py-4
       ">
+        {activePlant && (
+          <Plant
+            id="primrose"
+            imgSrc={activePlant.imgSrc}
+            imgWidth={activePlant.modalWidth}
+            class={activePlant.modalClass}
+          />
+        )}
         <p class="text-3xl/snug text-body">
           {description}
         </p>
-        <span class="text-3xl/snug text-body">Gifts: </span>
-        {gifts.map((gift, i) => (
-          <span class="inline text-3xl/snug text-body">
-            {gift}{i < gifts.length - 1 && ", "}
-          </span>
-        ))}
+         <div class="self-start">
+          <span class="text-3xl/snug text-body">Gifts: </span>
+          {gifts.map((gift: string, i: number) => (
+            <span class="text-3xl/snug text-body">
+              {gift}{i < gifts.length - 1 && ", "}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   </div>
