@@ -10,6 +10,7 @@ import Narrative from "../components/Narrative.astro";
 import back from "../assets/back.png"
 import table from "../assets/table.png"
 import { plants } from "../utils/plants";
+import { cx } from "../lib/utils";
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
@@ -30,7 +31,9 @@ export interface Plant {
 <Layout>
   <section class="relative h-screen w-screen items-center overflow-hidden p-6">
 
-    <img src={background.src} class="absolute inset-0 h-screen object-cover"/>
+    <img src={background.src} class="
+      absolute inset-0 h-screen w-screen object-cover
+    "/>
     <img src={garden.src} class="absolute top-[18%] left-1/2 -translate-x-1/2" />
 
     <Narrative narrative={[data.gardenCta]} position="top" />
@@ -51,9 +54,9 @@ export interface Plant {
     <!-- Render plant modal elements -->
     {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
 
-    <button id="btn-back" type="button" class="
-      absolute bottom-2 left-1/2 -translate-x-1/2
-    "><img src={back.src} class="scale-50" /></button>
+    <button id="btn-back" type="button" class="absolute bottom-2 left-[-9%]">
+      <img src={back.src} class="scale-40" />
+    </button>
   </section>
 </Layout>
 
@@ -61,6 +64,13 @@ export interface Plant {
   import { Modal } from "flowbite";
 
   const backBtn = document.getElementById("btn-back");
+  const screenHeight = window.screen.height;
+
+  if (screenHeight < 700) {
+    backBtn?.classList.remove("bottom-2");
+    backBtn?.classList.add("bottom-[-7%]")
+  }
+
   backBtn?.addEventListener("click", () => {
     window.location.href = "/"
   })

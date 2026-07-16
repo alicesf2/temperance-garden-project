@@ -10,7 +10,7 @@ export const plants = [
     imgWidth: 175,
     class:
       "absolute top-[45%] left-[-10%] scale-40 [--glow-opacity:0.5] [--glow-size:60px]",
-    modalWidth: 125,
+    modalWidth: 150,
     modalClass: "relative",
   },
   {
@@ -19,7 +19,7 @@ export const plants = [
     imgWidth: 480,
     class:
       "absolute top-[28%] left-[20%] [--glow-inner:15px] [--glow-opacity:0.3] [--glow-size:30px] scale-70",
-    modalWidth: 800,
+    modalWidth: 480,
     modalClass: "relative",
   },
   {
@@ -27,7 +27,7 @@ export const plants = [
     imgSrc: americanElm.src,
     imgWidth: 140,
     class: "absolute top-[22%] left-[-1%]",
-    modalWidth: 300,
+    modalWidth: 190,
     modalClass: "relative",
   },
   {
@@ -35,7 +35,7 @@ export const plants = [
     imgSrc: easternRedCedar.src,
     imgWidth: 90,
     class: "absolute top-[30%] left-[-1%]",
-    modalWidth: 250,
+    modalWidth: 220,
     modalClass: "relative",
   },
 ];
