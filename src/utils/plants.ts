@@ -1,5 +1,7 @@
 import primrose from "../assets/primrose.png";
 import redbud from "../assets/redbud.png";
+import americanElm from "../assets/american-elm.png";
+import easternRedCedar from "../assets/eastern-red-cedar.png";
 
 export const plants = [
   {
@@ -14,10 +16,26 @@ export const plants = [
   {
     id: "eastern-redbud",
     imgSrc: redbud.src,
-    imgWidth: 800,
+    imgWidth: 480,
     class:
-      "absolute top-[20%] right-[-2.5%] scale-70 [--glow-inner:15px] [--glow-opacity:0.3] [--glow-size:30px]",
+      "absolute top-[28%] left-[20%] [--glow-inner:15px] [--glow-opacity:0.3] [--glow-size:30px] scale-70",
     modalWidth: 800,
+    modalClass: "relative",
+  },
+  {
+    id: "american-elm",
+    imgSrc: americanElm.src,
+    imgWidth: 150,
+    class: "absolute top-[18%] left-[-1%]",
+    modalWidth: 300,
+    modalClass: "relative",
+  },
+  {
+    id: "eastern-red-cedar",
+    imgSrc: easternRedCedar.src,
+    imgWidth: 120,
+    class: "absolute top-[26%] left-[-1%]",
+    modalWidth: 250,
     modalClass: "relative",
   },
 ];

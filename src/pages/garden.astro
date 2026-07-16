@@ -8,6 +8,7 @@ import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 import Narrative from "../components/Narrative.astro";
 import back from "../assets/back.png"
+import table from "../assets/table.png"
 import { plants } from "../utils/plants";
 
 // Load data from TAG google doc
@@ -33,6 +34,8 @@ export interface Plant {
     <img src={garden.src} class="absolute top-[18%] left-1/2 -translate-x-1/2" />
 
     <Narrative narrative={[data.gardenCta]} position="top" />
+
+    <img src={table.src} class="absolute top-[18%] left-0" />
     
     <!-- Render clickable plant images -->
     {plants.map(plant => (
