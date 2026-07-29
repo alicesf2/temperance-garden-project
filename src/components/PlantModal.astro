@@ -1,6 +1,7 @@
 ---
 import type { Plant as PlantType } from "../pages/garden.astro";
 import Plant from "../components/Plant.astro"
+import PlantCarousel from "./PlantCarousel.astro";
 import "../styles/global.css";
 import { plants } from "../utils/plants";
 
@@ -17,17 +18,17 @@ const activePlant = plants.find(plant => plant.id === id);
   tabindex="-1"
   aria-hidden="true"
   class="
-    fixed inset-x-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full
-    justify-center overflow-x-hidden overflow-y-auto
+    fixed inset-x-0 top-0 z-50 hidden h-screen w-full justify-center
+    overflow-x-hidden overflow-y-auto
     md:inset-0
   "
 >
-  <div class="relative max-h-full w-full max-w-4xl p-4">
+  <div class="relative size-full p-4">
     <!-- Modal content -->
     <div
       class="
-        relative rounded-base border border-default bg-neutral-primary-soft p-4
-        font-narrative shadow-sm
+        relative h-full rounded-base border border-default
+        bg-neutral-primary-soft p-4 font-narrative shadow-sm
         md:p-6
       "
     >
@@ -76,10 +77,11 @@ const activePlant = plants.find(plant => plant.id === id);
       </div>
       <!-- Modal body -->
       <div class="
-        flex flex-col items-center space-y-2 py-2
+        flex h-full flex-col items-center space-y-2 py-2
         md:space-y-4 md:py-4
       ">
-        {activePlant && (
+        <PlantCarousel description={description} gifts={gifts} activePlant={activePlant} />
+        <!-- {activePlant && (
           <Plant
             id="primrose"
             imgSrc={activePlant.imgSrc}
@@ -90,15 +92,20 @@ const activePlant = plants.find(plant => plant.id === id);
         <p class="text-3xl/snug text-body">
           {description}
         </p>
-         <div class="self-start">
+        <div class="self-start">
           <span class="text-3xl/snug text-body">Gifts: </span>
           {gifts.map((gift: string, i: number) => (
             <span class="text-3xl/snug text-body">
               {gift}{i < gifts.length - 1 && ", "}
             </span>
           ))}
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 </div>
+
+<!-- Carousel Code -->
+<script>
+
+</script>
