@@ -19,7 +19,7 @@ const activePlant = plants.find(plant => plant.id === id);
   aria-hidden="true"
   class="
     fixed inset-x-0 top-0 z-50 hidden h-screen w-full justify-center
-    overflow-x-hidden overflow-y-auto
+    overflow-hidden
     md:inset-0
   "
 >
@@ -81,31 +81,7 @@ const activePlant = plants.find(plant => plant.id === id);
         md:space-y-4 md:py-4
       ">
         <PlantCarousel description={description} gifts={gifts} activePlant={activePlant} />
-        <!-- {activePlant && (
-          <Plant
-            id="primrose"
-            imgSrc={activePlant.imgSrc}
-            imgWidth={activePlant.modalWidth}
-            class={activePlant.modalClass}
-          />
-        )}
-        <p class="text-3xl/snug text-body">
-          {description}
-        </p>
-        <div class="self-start">
-          <span class="text-3xl/snug text-body">Gifts: </span>
-          {gifts.map((gift: string, i: number) => (
-            <span class="text-3xl/snug text-body">
-              {gift}{i < gifts.length - 1 && ", "}
-            </span>
-          ))}
-        </div> -->
       </div>
     </div>
   </div>
 </div>
-
-<!-- Carousel Code -->
-<script>
-
-</script>

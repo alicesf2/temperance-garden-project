@@ -15,7 +15,7 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
     <!-- Carousel wrapper -->
     <div class="relative h-full overflow-hidden rounded-base">
          <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
+        <div id="carousel-item-1" class="hidden duration-700 ease-in-out" data-carousel-item="active">
             <Plant
                 id="primrose"
                 imgSrc={imgSrc}
@@ -27,7 +27,7 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
             </p>
         </div>
         <!-- Item 2 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <div id="carousel-item-2" class="hidden duration-700 ease-in-out" data-carousel-item>
             {gifts.map((gift: string, i: number) => (
                 <span class="text-3xl/snug text-body">
                     {gift}{i < gifts.length - 1 && ", "}
@@ -65,10 +65,11 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
         <button type="button" class="size-3 rounded-base" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
     </div>
     <!-- Slider controls -->
-    <!-- <button type="button" class="
-      group absolute inset-s-0 top-0 z-30 flex h-full cursor-pointer
+    <button type="button" class="
+      group absolute inset-s-0 top-0 z-30 hidden h-full cursor-pointer
       items-center justify-center px-4
       focus:outline-none
+      lg:flex
     " data-carousel-prev>
         <span class="
           inline-flex size-10 items-center justify-center rounded-base
@@ -87,9 +88,10 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
         </span>
     </button>
     <button type="button" class="
-      group absolute inset-e-0 top-0 z-30 flex h-full cursor-pointer
+      group absolute inset-e-0 top-0 z-30 hidden h-full cursor-pointer
       items-center justify-center px-4
       focus:outline-none
+      lg:flex
     " data-carousel-next>
         <span class="
           inline-flex size-10 items-center justify-center rounded-base
@@ -106,6 +108,47 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
             " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/></svg>
             <span class="sr-only">Next</span>
         </span>
-    </button> -->
+    </button>
 </div>
+
+<script>
+    import { Carousel } from "flowbite";
+    import type { CarouselItem, CarouselOptions } from "flowbite";
+
+    const carouselElement = document.getElementById("indicators-carousel")!;
+
+    const items: CarouselItem[] = [
+        {
+            position: 0,
+            el: document.getElementById('carousel-item-1'),
+        },
+        {
+            position: 1,
+            el: document.getElementById('carousel-item-2'),
+        },
+    ];
+
+    const carouselInstance = new Carousel(
+        carouselElement,
+        items,
+    );
+
+    let startX = 0;
+
+    carouselElement.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+    });
+
+    carouselElement.addEventListener("touchend", (e) => {
+        const delta = e.changedTouches[0].clientX - startX;
+
+        if (Math.abs(delta) < 50) return;
+
+        if (delta < 0) {
+            carouselInstance.next();
+        } else {
+            carouselInstance.prev();
+        }
+    });
+</script>
 
