@@ -11,7 +11,7 @@ const { id, description, gifts } = Astro.props;
 const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
 ---
 
-<div id={`${id}-carousel`} class="carousel size-full">
+<div id={`${id}-carousel`} class="carousel size-full touch-pan-y">
     <!-- Carousel wrapper -->
     <div class="relative h-full overflow-hidden rounded-base">
          <!-- Item 1 -->
@@ -32,11 +32,18 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
         <div id="carousel-item-2" class="
           carousel-item hidden duration-700 ease-in-out
         ">
+            <h2 class="text-4xl">Gifts</h2>
             {gifts.map((gift: string, i: number) => (
                 <span class="text-3xl/snug text-body">
                     {gift}{i < gifts.length - 1 && ", "}
                 </span>
             ))}
+        </div>
+        <!-- Item 3 -->
+        <div id="carousel-item-3" class="
+          carousel-item hidden duration-700 ease-in-out
+        ">
+            Slide 3
         </div>
     </div>
     <!-- Slider indicators -->
@@ -44,8 +51,9 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
       absolute bottom-10 left-1/2 z-30 flex -translate-x-1/2 space-x-3
       rtl:space-x-reverse
     ">
-        <button type="button" class="size-3 rounded-base" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" class="size-3 rounded-base" aria-current="false" aria-label="Slide 2"></button>
+        <button type="button" class="size-3 rounded-base bg-gray" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" class="size-3 rounded-base bg-gray" aria-current="false" aria-label="Slide 2"></button>
+        <button type="button" class="size-3 rounded-base bg-gray" aria-current="false" aria-label="Slide 3"></button>
     </div>
     <!-- Slider controls -->
     <button id="carousel-prev" type="button" class="
@@ -120,26 +128,33 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
 
         // Listen for touch events
         let startX = 0;
+        let currentX = 0;
 
         carouselEl.addEventListener("pointerdown", (e: PointerEvent) => {
             startX = e.clientX;
-            console.log("pointerdown")
+            currentX = e.clientX;
+        });
+
+        carouselEl.addEventListener("pointermove", (e: PointerEvent) => {
+            currentX = e.clientX;
         });
 
         carouselEl.addEventListener("pointerup", (e: PointerEvent) => {
             const delta = e.clientX - startX;
 
+            console.log({
+                startX,
+                endX: e.clientX,
+                delta,
+            });
+
             if (Math.abs(delta) < 50) return;
 
             if (delta < 0) {
-                carouselInstance.next()
+                carouselInstance.next();
             } else {
-                carouselInstance.prev()
+                carouselInstance.prev();
             }
-        });
-
-        carouselEl.addEventListener("pointercancel", () => {
-            startX = 0;
         });
     })    
 </script>
