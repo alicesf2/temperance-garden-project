@@ -80,7 +80,7 @@ const activePlant = plants.find(plant => plant.id === id);
         flex h-full flex-col items-center space-y-2 py-2
         md:space-y-4 md:py-4
       ">
-        <PlantCarousel description={description} gifts={gifts} activePlant={activePlant} />
+        <PlantCarousel id={id} description={description} gifts={gifts} activePlant={activePlant} />
       </div>
     </div>
   </div>
