@@ -50,3 +50,7 @@
 .animate-haloPulse {
   animation: haloPulse 1.6s infinite;
 } */
+
+.carousel-item {
+  @apply flex h-[80%] flex-col items-center justify-center duration-700 ease-in-out;
+}

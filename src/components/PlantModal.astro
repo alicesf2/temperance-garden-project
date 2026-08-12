@@ -23,7 +23,7 @@ const activePlant = plants.find(plant => plant.id === id);
     md:inset-0
   "
 >
-  <div class="relative size-full p-4">
+  <div class="relative h-screen w-full p-4">
     <!-- Modal content -->
     <div
       class="
@@ -77,7 +77,7 @@ const activePlant = plants.find(plant => plant.id === id);
       </div>
       <!-- Modal body -->
       <div class="
-        flex h-full flex-col items-center space-y-2 py-2
+        flex h-full flex-col items-center justify-center space-y-2 py-2
         md:space-y-4 md:py-4
       ">
         <PlantCarousel id={id} description={description} gifts={gifts} activePlant={activePlant} />

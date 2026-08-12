@@ -11,13 +11,11 @@ const { id, description, gifts } = Astro.props;
 const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
 ---
 
-<div id={`${id}-carousel`} class="carousel size-full touch-pan-y">
+<div id={`${id}-carousel`} class="carousel h-screen w-full touch-pan-y">
     <!-- Carousel wrapper -->
-    <div class="relative h-full overflow-hidden rounded-base">
+    <div class="relative h-screen overflow-hidden rounded-base">
          <!-- Item 1 -->
-        <div id="carousel-item-1" class="
-          carousel-item hidden duration-700 ease-in-out
-        ">
+        <div id="carousel-item-1" class="carousel-item">
             <Plant
                 id="primrose"
                 imgSrc={imgSrc}
@@ -29,9 +27,7 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
             </p>
         </div>
         <!-- Item 2 -->
-        <div id="carousel-item-2" class="
-          carousel-item hidden duration-700 ease-in-out
-        ">
+        <div id="carousel-item-2" class="carousel-item hidden">
             <h2 class="text-4xl">Gifts</h2>
             {gifts.map((gift: string, i: number) => (
                 <span class="text-3xl/snug text-body">
@@ -40,9 +36,7 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
             ))}
         </div>
         <!-- Item 3 -->
-        <div id="carousel-item-3" class="
-          carousel-item hidden duration-700 ease-in-out
-        ">
+        <div id="carousel-item-3" class="carousel-item hidden">
             Slide 3
         </div>
     </div>
@@ -138,21 +132,17 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
         carouselEl.addEventListener("pointermove", (e: PointerEvent) => {
             currentX = e.clientX;
         });
-
+        
         carouselEl.addEventListener("pointerup", (e: PointerEvent) => {
             const delta = e.clientX - startX;
 
-            console.log({
-                startX,
-                endX: e.clientX,
-                delta,
-            });
-
             if (Math.abs(delta) < 50) return;
 
-            if (delta < 0) {
+            const currentPosition = carouselInstance.getActiveItem().position;
+
+            if (delta < 0 && currentPosition < items.length - 1) {
                 carouselInstance.next();
-            } else {
+            } else if (delta > 0 && currentPosition > 0) {
                 carouselInstance.prev();
             }
         });
