@@ -19,15 +19,15 @@ const data = archieml.load(text);
 ---
 
 <Layout>
-  <section id="landing" class="relative h-screen w-screen overflow-hidden">
+  <section id="landing" class="relative h-dvh w-screen overflow-hidden">
     <!-- Background images -->
     <img id="img-gates-closed" src={gatesClosed.src} class="
-      absolute inset-0 h-screen w-screen object-cover opacity-100
+      absolute inset-0 h-dvh w-screen object-cover opacity-100
       transition-opacity duration-700
     " />
     <img id="img-gates-open" src={gatesOpen.src} class="
-      absolute inset-0 h-screen w-screen object-cover opacity-0
-      transition-opacity duration-700
+      absolute inset-0 h-dvh w-screen object-cover opacity-0 transition-opacity
+      duration-700
     " />
 
     <!-- Ustreet logo and next event -->
