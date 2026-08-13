@@ -29,6 +29,10 @@
   }
 }
 
+@utility carousel-item-inner {
+  @apply flex h-[80%] flex-col items-center justify-center;
+}
+
 /* @keyframes haloPulse {
   0% {
     filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.3));
@@ -50,7 +54,3 @@
 .animate-haloPulse {
   animation: haloPulse 1.6s infinite;
 } */
-
-.carousel-item {
-  @apply flex h-[80%] flex-col items-center justify-center duration-700 ease-in-out;
-}

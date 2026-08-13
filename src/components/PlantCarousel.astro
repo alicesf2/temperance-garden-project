@@ -1,21 +1,16 @@
 ---
-import { Carousel } from "flowbite";
+import "../styles/global.css"
 import Plant from "./Plant.astro";
-import type {
-    CarouselItem,
-    CarouselOptions,
-    CarouselInterface,
-} from "flowbite";
 
 const { id, description, gifts } = Astro.props;
 const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
 ---
 
-<div id={`${id}-carousel`} class="carousel h-screen w-full touch-pan-y">
-    <!-- Carousel wrapper -->
-    <div class="relative h-screen overflow-hidden rounded-base">
-         <!-- Item 1 -->
-        <div id="carousel-item-1" class="carousel-item">
+<div class="embla size-full">
+  <div class="embla__viewport h-[80%] w-full overflow-hidden">
+    <div class="embla__container flex touch-pan-y">
+        <!-- Slide 1 -->
+      <div class="embla__slide min-w-0 flex-[0_0_100%]">
             <Plant
                 id="primrose"
                 imgSrc={imgSrc}
@@ -25,127 +20,47 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
             <p class="text-3xl/snug text-body">
                 {description}
             </p>
-        </div>
-        <!-- Item 2 -->
-        <div id="carousel-item-2" class="carousel-item hidden">
-            <h2 class="text-4xl">Gifts</h2>
-            {gifts.map((gift: string, i: number) => (
-                <span class="text-3xl/snug text-body">
-                    {gift}{i < gifts.length - 1 && ", "}
-                </span>
-            ))}
-        </div>
-        <!-- Item 3 -->
-        <div id="carousel-item-3" class="carousel-item hidden">
-            Slide 3
-        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="embla__slide min-w-0 flex-[0_0_100%]">
+        <h2 class="text-4xl">Gifts</h2>
+        {gifts.map((gift: string, i: number) => (
+            <span class="text-3xl/snug text-body">
+                {gift}{i < gifts.length - 1 && ", "}
+            </span>
+        ))}
+      </div>
+      <!-- Slide 3 -->
+      <div class="embla__slide min-w-0 flex-[0_0_100%]">Slide 3</div>
     </div>
-    <!-- Slider indicators -->
-    <div class="
-      absolute bottom-10 left-1/2 z-30 flex -translate-x-1/2 space-x-3
-      rtl:space-x-reverse
-    ">
-        <button type="button" class="size-3 rounded-base bg-gray" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" class="size-3 rounded-base bg-gray" aria-current="false" aria-label="Slide 2"></button>
-        <button type="button" class="size-3 rounded-base bg-gray" aria-current="false" aria-label="Slide 3"></button>
-    </div>
-    <!-- Slider controls -->
-    <button id="carousel-prev" type="button" class="
-      group absolute inset-s-0 top-0 z-30 hidden h-full cursor-pointer
-      items-center justify-center px-4
-      focus:outline-none
-      lg:flex
-    ">
-        <span class="
-          inline-flex size-10 items-center justify-center rounded-base
-          bg-white/30
-          group-hover:bg-white/50
-          group-focus:ring-4 group-focus:ring-white group-focus:outline-none
-          dark:bg-gray-800/30
-          dark:group-hover:bg-gray-800/60
-          dark:group-focus:ring-gray-800/70
-        ">
-            <svg class="
-              size-5 text-white
-              rtl:rotate-180
-            " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7"/></svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button id="carousel-next" type="button" class="
-      group absolute inset-e-0 top-0 z-30 hidden h-full cursor-pointer
-      items-center justify-center px-4
-      focus:outline-none
-      lg:flex
-    ">
-        <span class="
-          inline-flex size-10 items-center justify-center rounded-base
-          bg-white/30
-          group-hover:bg-white/50
-          group-focus:ring-4 group-focus:ring-white group-focus:outline-none
-          dark:bg-gray-800/30
-          dark:group-hover:bg-gray-800/60
-          dark:group-focus:ring-gray-800/70
-        ">
-            <svg class="
-              size-5 text-white
-              rtl:rotate-180
-            " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/></svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
+  </div>
+
+  <button class="
+    embla__prev hidden
+    lg:flex
+  ">Scroll to prev</button>
+  <button class="
+    embla__next hidden
+    lg:flex
+  ">Scroll to next</button>
 </div>
 
 <script>
-    import { Carousel } from "flowbite"
-    import type {
-        CarouselItem,
-        CarouselOptions,
-    } from "flowbite";
+    import EmblaCarousel from 'embla-carousel'
+    
+    const carousels = document.querySelectorAll('.embla')
 
-    // Grab all carousel elements and attach swipe listeners individually
-    const carouselElements = document.querySelectorAll<HTMLElement>(".carousel")
-    carouselElements.forEach(carouselEl => {
-        // Instantiate carousel instances
-        const items: CarouselItem[] = Array.from(
-            carouselEl.querySelectorAll<HTMLElement>(".carousel-item")
-        ).map((el, position) => ({
-            position,
-            el,
-        }));
+    carousels.forEach((carousel) => {
+        if (carousel) {
+            const viewportNode = carousel.querySelector('.embla__viewport') as HTMLElement
+            const prevButtonNode = carousel.querySelector('.embla__prev')
+            const nextButtonNode = carousel.querySelector('.embla__next')
 
-        const options: CarouselOptions = {
-            defaultPosition: 0,
-        };
+            const emblaApi = EmblaCarousel(viewportNode, { loop: false })
 
-        const carouselInstance = new Carousel(carouselEl, items, options);
-
-        // Listen for touch events
-        let startX = 0;
-        let currentX = 0;
-
-        carouselEl.addEventListener("pointerdown", (e: PointerEvent) => {
-            startX = e.clientX;
-            currentX = e.clientX;
-        });
-
-        carouselEl.addEventListener("pointermove", (e: PointerEvent) => {
-            currentX = e.clientX;
-        });
-        
-        carouselEl.addEventListener("pointerup", (e: PointerEvent) => {
-            const delta = e.clientX - startX;
-
-            if (Math.abs(delta) < 50) return;
-
-            const currentPosition = carouselInstance.getActiveItem().position;
-
-            if (delta < 0 && currentPosition < items.length - 1) {
-                carouselInstance.next();
-            } else if (delta > 0 && currentPosition > 0) {
-                carouselInstance.prev();
-            }
-        });
-    })    
+            prevButtonNode?.addEventListener('click', () => emblaApi.scrollPrev(), false)
+            nextButtonNode?.addEventListener('click', () => emblaApi.scrollNext(), false)
+        }
+    })
 </script>
 
