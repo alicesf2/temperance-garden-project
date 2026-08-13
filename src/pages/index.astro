@@ -38,8 +38,8 @@ const data = archieml.load(text);
         </a>
       </div>
       <div>
-        <a href="https://www.ustreetcommunity.org/events/native-plant-tea-talk-and-taste-5xn76">
-          <p class="mb-0 font-narrative text-2xl underline">Next Event: Aug 11</p>
+        <a href={data.eventUrl}>
+          <p class="mb-0 font-narrative text-2xl underline">Next Event: {data.eventDate}</p>
         </a>
       </div>
     </div>
