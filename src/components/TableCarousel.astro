@@ -1,0 +1,129 @@
+---
+import "../styles/global.css"
+import archieml from "archieml";
+import pic1 from "../assets/sanctuary-sign.jpg";
+import pic2 from "../assets/sanctuary-view.jpg";
+import pic3 from "../assets/sanctuary-key.jpg";
+
+// Load data from TAG google doc
+const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
+const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
+const text = await fetch(url).then((res) => res.text());
+const data = archieml.load(text);
+
+export interface Event {
+  id: string;
+  title: string;
+  date: string;
+  description: string;
+}
+---
+
+<div class="embla relative size-full">
+    <div class="embla__viewport h-[80%] w-full overflow-y-scroll">
+        <div class="embla__container flex touch-pan-y">
+            <!-- Slide 1 -->
+            <div class="embla__slide flex min-w-0 flex-[0_0_100%] flex-col">
+                <h1 class="text-3xl">{data.events[0].title}</h1>
+                <p class="text-xl">{data.events[0].date}</p>
+                <p class="text-2xl/snug">{data.events[0].description}</p>
+                <div class="flex flex-col gap-4">
+                    {[pic1, pic2, pic3].map(pic => (
+                        <img src={pic.src} />
+                    ))}
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="embla__slide min-w-0 flex-[0_0_100%]">
+                <h1 class="text-3xl">{data.events[1].title}</h1>
+                <p class="text-xl">{data.events[1].date}</p>
+                <p class="text-2xl/snug">{data.events[1].description}</p>
+                <div class="flex flex-col gap-4">
+                    {[pic1, pic2, pic3].map(pic => (
+                        <img src={pic.src} />
+                    ))}
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="embla__slide min-w-0 flex-[0_0_100%]">Slide 3</div>
+        </div>
+    </div>
+
+    <!-- <div class="embla__dots flex h-4 justify-center gap-2"></div> -->
+
+    <button class="
+      embla__prev hidden
+      lg:flex
+    ">Scroll to prev</button>
+    <button class="
+      embla__next hidden
+      lg:flex
+    ">Scroll to next</button>
+</div>
+
+<script>
+    import EmblaCarousel from 'embla-carousel'
+    
+    const carousels = document.querySelectorAll('.embla')
+
+    carousels.forEach((carousel) => {
+        if (carousel) {
+            const viewportNode = carousel.querySelector('.embla__viewport') as HTMLElement
+            const dotsNode = carousel.querySelector(".embla__dots")
+            const prevButtonNode = carousel.querySelector('.embla__prev')
+            const nextButtonNode = carousel.querySelector('.embla__next')
+
+            const emblaApi = EmblaCarousel(viewportNode, { loop: false })
+
+            // Generate dot buttons
+            const generateDots = () => {
+                const scrollSnaps = emblaApi.scrollSnapList()
+
+                dotsNode.innerHTML = scrollSnaps
+                    .map(() => `<button class="embla__dot bg-gray-400 size-3 rounded-full" type="button"></button>`)
+                    .join('')
+                }
+
+                // Handle dot clicks
+                const addClickHandlers = () => {
+                    const dots = Array.from(dotsNode.querySelectorAll('.embla__dot'))
+                    dots.forEach((dot, index) => {
+                        dot.addEventListener('click', () => emblaApi.scrollTo(index))
+                    })
+                }
+
+                // Update selected dot state
+                const updateDots = () => {
+                const dots = Array.from(dotsNode.querySelectorAll('.embla__dot'))
+                const previousIndex = emblaApi.previousScrollSnap()
+                const selectedIndex = emblaApi.selectedScrollSnap()
+
+                if (dots[previousIndex]) {
+                    dots[previousIndex].classList.remove('bg-gray-600');
+                    dots[previousIndex].classList.add("bg-gray-400")
+                }
+                if (dots[selectedIndex]) {
+                    dots[selectedIndex].classList.remove('bg-gray-400')
+                    dots[selectedIndex].classList.add('bg-gray-600')
+                }
+            }
+
+            // Initialize
+            generateDots()
+            addClickHandlers()
+            updateDots()
+
+            // Listen to Embla events to update state
+            emblaApi.on('select', updateDots)
+            emblaApi.on('reInit', () => {
+                generateDots()
+                addClickHandlers()
+                updateDots()
+            })
+
+            prevButtonNode?.addEventListener('click', () => emblaApi.scrollPrev(), false)
+            nextButtonNode?.addEventListener('click', () => emblaApi.scrollNext(), false)
+        }
+    })
+</script>
+

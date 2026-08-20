@@ -1,0 +1,76 @@
+---
+import TableCarousel from "../components/TableCarousel.astro"
+---
+
+<div
+  id="table-modal"
+  tabindex="-1"
+  aria-hidden="true"
+  class="
+    fixed inset-x-0 top-0 z-50 hidden h-dvh w-full justify-center
+    overflow-hidden
+    md:inset-0
+  "
+>
+  <div class="relative h-dvh w-full p-4">
+    <!-- Modal content -->
+    <div
+      class="
+        relative h-full rounded-base border border-default
+        bg-neutral-primary-soft p-4 font-narrative shadow-sm
+        md:p-6
+      "
+    >
+      <!-- Modal header -->
+      <div
+        class="
+          flex items-start gap-8 border-b border-default pb-4
+          md:pb-5
+        "
+      >
+        <div>
+          <h3 class="
+            text-4xl font-semibold whitespace-nowrap text-heading capitalize
+          ">Past Events</h3>
+        </div>
+        <button
+          type="button"
+          id="table-close-btn"
+          class="
+            ms-auto inline-flex size-9 cursor-pointer items-center
+            justify-center rounded-base bg-transparent text-sm text-body
+            hover:bg-neutral-tertiary hover:text-heading
+          "
+          data-modal-hide="table-modal"
+        >
+          <svg
+            class="size-10"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18 17.94 6M18 18 6.06 6"
+            >
+            </path>
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="
+        flex h-full flex-col items-center justify-center space-y-2 py-2
+        md:space-y-4 md:py-4
+      ">
+        <TableCarousel />
+      </div>
+    </div>
+  </div>
+</div>

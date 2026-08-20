@@ -11,6 +11,7 @@ import back from "../assets/back.png"
 import table from "../assets/table.png"
 import { plants } from "../utils/plants";
 import { cx } from "../lib/utils";
+import TableModal from "../components/TableModal.astro";
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
@@ -34,12 +35,17 @@ export interface Plant {
     <img src={background.src} class="
       absolute inset-0 h-dvh w-screen object-cover
     "/>
+
     <img src={garden.src} class="absolute top-[18%] left-1/2 -translate-x-1/2" />
 
     <Narrative narrative={[data.gardenCta]} position="top" />
 
-    <img src={table.src} class="absolute top-[18%] left-0" />
-    
+    <button id="table" class="
+      absolute top-[48%] left-1/2 z-49 -translate-x-1/2 scale-50 cursor-pointer
+    " data-modal-target="table-modal" data-modal-toggle="table-modal">
+      <img id="table" src={table.src} />
+    </button>
+
     <!-- Render clickable plant images -->
     {plants.map(plant => (
       <Plant
@@ -53,6 +59,9 @@ export interface Plant {
 
     <!-- Render plant modal elements -->
     {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
+
+    <!-- Render table modal element -->
+    <TableModal />
 
     <button id="btn-back" type="button" class="absolute bottom-2 left-[-9%]">
       <img src={back.src} class="scale-40" />
