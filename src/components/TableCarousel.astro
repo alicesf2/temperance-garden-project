@@ -20,16 +20,17 @@ export interface Event {
 ---
 
 <div class="embla relative size-full">
-    <div class="embla__viewport h-[80%] w-full overflow-y-scroll">
+    <div class="embla__viewport h-[85%] w-full overflow-y-scroll">
         <div class="embla__container flex touch-pan-y">
             <!-- Slide 1 -->
-            <div class="embla__slide flex min-w-0 flex-[0_0_100%] flex-col">
+            <div class="embla__slide min-w-0 flex-[0_0_100%]">
                 <h1 class="text-3xl">{data.events[0].title}</h1>
                 <p class="text-xl">{data.events[0].date}</p>
                 <p class="text-2xl/snug">{data.events[0].description}</p>
                 <div class="flex flex-col gap-4">
                     {[pic1, pic2, pic3].map(pic => (
                         <img src={pic.src} />
+                        <figcaption>Photo caption</figcaption>
                     ))}
                 </div>
             </div>
@@ -49,7 +50,7 @@ export interface Event {
         </div>
     </div>
 
-    <!-- <div class="embla__dots flex h-4 justify-center gap-2"></div> -->
+    <div class="embla__dots flex h-4 justify-center gap-2 py-2"></div>
 
     <button class="
       embla__prev hidden

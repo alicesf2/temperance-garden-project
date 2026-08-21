@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import archieml from "archieml";
+import redBg from "../assets/red-background.png";
 import gatesClosed from "../assets/gates-closed.png";
 import gatesOpen from "../assets/gates-open.png";
 import ustreetLogo from "../assets/ustreet-logo.png";
@@ -10,6 +11,7 @@ import next from "../assets/next.png"
 import enter from "../assets/enter.png"
 import "../styles/global.css";
 import Narrative from "../components/Narrative.astro";
+import { cx } from "../lib/utils";
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
@@ -21,28 +23,37 @@ const data = archieml.load(text);
 <Layout>
   <section id="landing" class="relative h-dvh w-screen overflow-hidden">
     <!-- Background images -->
-    <img id="img-gates-closed" src={gatesClosed.src} class="
-      absolute inset-0 h-dvh w-screen object-cover opacity-100
-      transition-opacity duration-700
-    " />
-    <img id="img-gates-open" src={gatesOpen.src} class="
-      absolute inset-0 h-dvh w-screen object-cover opacity-0 transition-opacity
-      duration-700
-    " />
+    <img id="red-bg" class="
+      absolute inset-0 z-0 size-full object-cover blur-2xl
+    " src={redBg.src} />
 
-    <!-- Ustreet logo and next event -->
-    <div class="absolute top-5 left-5 flex flex-row gap-4">
-      <div>
-        <a href="https://ustreetcommunity.org">
-          <img class="w-12" src={ustreetLogo.src} />
-        </a>
-      </div>
-      <div>
-        <a href={data.eventUrl}>
-          <p class="mb-0 font-narrative text-2xl underline">Next Event: {data.eventDate}</p>
-        </a>
+    <div class="relative z-10 mx-auto h-dvh w-full max-w-200">
+      <img id="img-gates-closed" src={gatesClosed.src} class="
+        absolute inset-0 h-dvh w-full object-cover opacity-100
+        transition-opacity duration-700
+      " />
+      <img id="img-gates-open" src={gatesOpen.src} class="
+        absolute inset-0 h-dvh w-full object-cover opacity-0 transition-opacity
+        duration-700
+      " />
+      <!-- Ustreet logo and next event -->
+      <div id="ustreet-logo" class="
+        absolute top-5 left-5 z-20 flex flex-row gap-4
+      ">
+        <div>
+          <a href="https://ustreetcommunity.org">
+            <img class="w-12" src={ustreetLogo.src} />
+          </a>
+        </div>
+        <div>
+          <a href={data.eventUrl}>
+            <p class="mb-0 font-narrative text-2xl underline">Next Event: {data.eventDate}</p>
+          </a>
+        </div>
       </div>
     </div>
+
+
     
     <!-- Narrative and navigation buttons -->
     <Narrative narrative={data.narrative} position="bottom"/>
@@ -62,6 +73,7 @@ const data = archieml.load(text);
 </Layout>
 
 <script>
+  let isDesktop = window.innerWidth >= 800;
   const bgImage = document.getElementById("img-gates-closed");
   const bgImage2 = document.getElementById("img-gates-open");
 
@@ -71,6 +83,16 @@ const data = archieml.load(text);
   const backBtn = document.getElementById("btn-back");
   const enterBtn = document.getElementById("btn-enter");
   const lines = document.querySelectorAll("#narrative p");
+
+  window.addEventListener("resize", () => {
+    isDesktop = window.innerWidth >= 800;
+
+    if (isDesktop) {
+      const uStreetLogo = document.getElementById("ustreet-logo");
+      uStreetLogo?.classList.remove("top-5", "left-5");
+      uStreetLogo?.classList.add("top-10", "left-20")
+    }
+  })
 
   let activeIndex = 0;
 
