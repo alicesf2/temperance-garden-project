@@ -51,29 +51,28 @@ const data = archieml.load(text);
           </a>
         </div>
       </div>
-    </div>
 
+      <!-- Narrative and nav buttons -->
+      <Narrative narrative={data.narrative} position="bottom" />
 
-    
-    <!-- Narrative and navigation buttons -->
-    <Narrative narrative={data.narrative} position="bottom"/>
-    <button id="btn-start" type="button" class="
-      absolute bottom-12 left-1/2 -translate-x-1/2 scale-75
-    "><img src={start.src} /></button>
-    <div id="btn-container" class="
-      absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-row gap-8
-    ">
-      <button id="btn-back" type="button"><img src={back.src} class="scale-75" /></button>
-      <button id="btn-next" type="button"><img src={next.src} class="scale-75" /></button>
-      <button id="btn-enter" type="button" class="hidden"><img src={enter.src} class="
-        scale-78
-      "></button>
+      <button id="btn-start" type="button" class="
+        absolute bottom-12 left-1/2 w-40 -translate-x-1/2
+      "><img src={start.src} /></button>
+      <div id="btn-container" class="
+        absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-row gap-12
+      ">
+        <button id="btn-back" type="button"><img src={back.src} class="w-20" /></button>
+        <button id="btn-next" type="button"><img src={next.src} class="w-20" /></button>
+        <button id="btn-enter" type="button" class="hidden"><img src={enter.src} class="
+          w-20
+        " /></button>
+      </div>
     </div>
   </section>
 </Layout>
 
 <script>
-  let isDesktop = window.innerWidth >= 800;
+  let isDesktop = window.innerWidth >= 900;
   const bgImage = document.getElementById("img-gates-closed");
   const bgImage2 = document.getElementById("img-gates-open");
 
@@ -85,7 +84,7 @@ const data = archieml.load(text);
   const lines = document.querySelectorAll("#narrative p");
 
   window.addEventListener("resize", () => {
-    isDesktop = window.innerWidth >= 800;
+    isDesktop = window.innerWidth >= 900;
 
     if (isDesktop) {
       const uStreetLogo = document.getElementById("ustreet-logo");

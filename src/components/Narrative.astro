@@ -6,20 +6,25 @@ import speechBubble from "../assets/speech-bubble.png"
 interface Props {
     narrative: string[];
     position: "top"|"bottom";
-    options: boolean;
+    options?: boolean;
 }
 
 const {narrative, position, options} = Astro.props;
 ---
 
 <div id="narrative-wrapper" class={cx(`
-  absolute left-1/2 z-20 flex w-full -translate-x-1/2 flex-row items-center p-4
+  absolute left-1/2 z-20 flex w-full max-w-150 -translate-x-1/2 flex-row
+  items-center p-4
 `, position === "top" ? `top-8` : `bottom-32`)}>
-    <img src={keykye.src} width={65} />
-    <div id="narrative-speech" class="relative">
+    <img src={keykye.src} class="
+      scale-60
+      lg:scale-80
+    " />
+    <div id="narrative-speech" class="relative max-w-100">
         <img src={speechBubble.src} class="w-full scale-105" />
         <div id="narrative" class="
           absolute inset-0 ml-8 p-3 font-narrative text-3xl/6
+          lg:ml-12 lg:text-4xl/8
         ">
             {
                 narrative.map((line: string, i: number) => (
