@@ -15,6 +15,7 @@ const {narrative, position, options} = Astro.props;
 <div id="narrative-wrapper" class={cx(`
   absolute left-1/2 z-20 flex w-full max-w-150 -translate-x-1/2 flex-row
   items-center justify-center p-4
+  lg:relative
 `, position === "top" ? `top-8` : `bottom-32`)}>
     <img src={keykye.src} class="
       w-20
@@ -34,12 +35,50 @@ const {narrative, position, options} = Astro.props;
                 ))
             }
             {options && (
-                <div class="flex flex-col gap-2 text-lg">
-                    <button class="cursor-pointer rounded-2xl px-2 outline">Plant species</button>
-                    <button class="cursor-pointer rounded-2xl px-2 outline">Garden history</button>
-                    <button class="cursor-pointer rounded-2xl px-2 outline">Past events</button>
+                <div class="
+                  mt-2 flex flex-col gap-2 text-lg
+                  lg:flex-row lg:gap-2 lg:text-2xl
+                ">
+                    <button id="plant-view" class="
+                      cursor-pointer rounded-2xl px-2 outline
+                      hover:bg-gray-200 hover:outline-2
+                    ">Plant species</button>
+                    <button id="history-view" class="
+                      cursor-pointer rounded-2xl px-2 outline
+                      hover:bg-gray-200 hover:outline-2
+                    ">Garden history</button>
+                    <button id="event-view" class="
+                      cursor-pointer rounded-2xl px-2 outline
+                      hover:bg-gray-200 hover:outline-2
+                    ">Past events</button>
                 </div>
             )}
         </div>
     </div>
 </div>
+
+<script>
+    import { isPlantView, isEventView, isHistoryView } from "../stores/garden";
+
+    const plantViewBtn = document.getElementById("plant-view");
+    const historyViewBtn = document.getElementById("history-view");
+    const eventViewBtn = document.getElementById("event-view");
+
+    plantViewBtn?.addEventListener("click", () => {
+        isPlantView.set(true);
+        isHistoryView.set(false);
+        isEventView.set(false);
+    })
+
+    historyViewBtn?.addEventListener("click", () => {
+        isHistoryView.set(true);
+        isPlantView.set(false);
+        isEventView.set(false);
+    })
+
+    eventViewBtn?.addEventListener("click", () => {
+        isEventView.set(true);
+        isPlantView.set(false);
+        isHistoryView.set(false);
+    })
+</script>

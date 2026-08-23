@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import archieml from "archieml";
-import redBg from "../assets/red-background.png";
 import gatesClosed from "../assets/gates-closed.png";
 import gatesOpen from "../assets/gates-open.png";
 import ustreetLogo from "../assets/ustreet-logo.png";
@@ -22,11 +21,7 @@ const data = archieml.load(text);
 
 <Layout>
   <section id="landing" class="relative h-dvh w-screen overflow-hidden">
-    <!-- Background images -->
-    <img id="red-bg" class="
-      absolute inset-0 z-0 size-full object-cover blur-2xl
-    " src={redBg.src} />
-
+    <!-- Gate background -->
     <div class="relative z-10 mx-auto h-dvh w-full max-w-200">
       <img id="img-gates-closed" src={gatesClosed.src} class="
         absolute inset-0 h-dvh w-full object-cover opacity-100

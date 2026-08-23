@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { Font } from "astro:assets"
+import background from "../assets/red-background.png"
 ---
 
 <!doctype html>
@@ -15,6 +16,7 @@ import { Font } from "astro:assets"
 		<Font cssVariable="--font-dokdo" />
 	</head>
 	<body>
+		<img src={background.src} class="absolute inset-0 h-dvh w-screen object-cover"/>
 		<slot />
 		<script is:inline src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 	</body>

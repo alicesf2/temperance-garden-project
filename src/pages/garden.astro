@@ -30,53 +30,118 @@ export interface Plant {
 ---
 
 <Layout>
-  <section class="relative h-dvh w-screen items-center overflow-hidden p-6">
+  <section class="
+    relative flex h-dvh w-screen flex-row items-center gap-12 overflow-hidden
+    p-6
+  ">
+    <div>
+      <Narrative narrative={[data.gardenCta]} position="top" options />
+    </div>
 
-    <img src={background.src} class="
-      absolute inset-0 h-dvh w-screen object-cover
-    "/>
+    <div class="relative z-10 mx-auto h-dvh w-full max-w-170">
+      <img src={garden.src} class="
+        absolute top-[18%] left-1/2 -translate-x-1/2
+        lg:top-0
+      " />
 
-    <img src={garden.src} class="absolute top-[18%] left-1/2 -translate-x-1/2" />
-
-    <Narrative narrative={[data.gardenCta]} position="top" options />
-
-    <button id="table" class="
-      absolute top-[48%] left-1/2 z-49 -translate-x-1/2 scale-50 cursor-pointer
-    " data-modal-target="table-modal" data-modal-toggle="table-modal">
-      <img id="table" src={table.src} />
-    </button>
-
-    <!-- Render clickable plant images -->
-    {plants.map(plant => (
-      <Plant
-        id={plant.id}
-        imgSrc={plant.imgSrc}
-        imgWidth={plant.imgWidth}
-        class={plant.class}
-        modalTarget={`${plant.id}-modal`}
-      />
-    ))}
-
-    <!-- Render plant modal elements -->
-    {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
-
-    <!-- Render table modal element -->
-    <TableModal />
-    
-    <div class="
-      absolute bottom-4 flex w-[90%] flex-row justify-between gap-8 px-4
-    ">
-      <button id="btn-back" type="button" class="left-[-9%]">
-        <img src={back.src} class="h-18 w-auto" />
+      <button id="table" class="
+        absolute top-[48%] left-1/2 z-49 -translate-x-1/2 scale-50
+        cursor-pointer
+      " data-modal-target="table-modal" data-modal-toggle="table-modal">
+        <img id="table" src={table.src} />
       </button>
-      <input type="range" min="0" max="1" step="0.2" value="1" />
+
+      <!-- Render clickable plant images -->
+      {plants.map(plant => (
+        <Plant
+          id={plant.id}
+          imgSrc={plant.imgSrc}
+          imgWidth={plant.imgWidth}
+          class={plant.class}
+          modalTarget={`${plant.id}-modal`}
+        />
+      ))}
+
+      <!-- Render plant modal elements -->
+      {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
+
+      <!-- Render table modal element -->
+      <TableModal />
+
+      <div class="
+        absolute bottom-4 flex w-[90%] flex-row justify-between gap-8 px-4
+      ">
+        <button id="btn-back" type="button" class="left-[-9%]">
+          <img src={back.src} class="h-18 w-auto" />
+        </button>
+        <input id="history-slider" type="range" min="0" max="1" step="0.2" value="1" />
+      </div>
     </div>
   </section>
 </Layout>
 
 <script>
   import { Modal } from "flowbite";
+  import { isPlantView, isEventView, isHistoryView } from "../stores/garden";
 
+  const plantImgs = document.querySelectorAll<HTMLElement>("[data-plant-btn] > img");
+
+  const plantViewBtn = document.getElementById("plant-view");
+  const historyViewBtn = document.getElementById("history-view");
+  const eventViewBtn = document.getElementById("plant-view");
+
+  const historySlider = document.getElementById("history-slider");
+
+  const table = document.getElementById("table");
+
+  isPlantView.subscribe((plantView) => {
+    // Keep plant view button highlighted
+    if (plantView) {
+      plantViewBtn?.classList.add("outline-2", "bg-gray-200")
+    } else {
+      plantViewBtn?.classList.remove("outline-2", "bg-gray-200")
+    }
+
+    // Add swaying animation to plants
+    plantImgs.forEach(plantImg => {
+      if (plantImg) {
+        if (plantView) {
+          plantImg.classList.add("animate-sway")
+        } else {
+          plantImg.classList.remove("animate-sway")
+        }
+      }
+    })
+  });
+
+  isHistoryView.subscribe((historyView) => {
+    if (historyView) {
+      historySlider?.classList.remove("hidden");
+      historyViewBtn?.classList.add("outline-2", "bg-gray-200");
+    } else {
+      historySlider?.classList.add("hidden");
+      historyViewBtn?.classList.remove("outline-2", "bg-gray-200");
+    }
+  })
+
+  isEventView.subscribe((eventView) => {
+    if (eventView) {
+      table?.classList.add("animate-sway");
+      eventViewBtn?.classList.add("bg-gray-200", "outline-2");
+    } else {
+      table?.classList.remove("animate-sway");
+      eventViewBtn?.classList.remove("bg-gray-200", "outline-2");
+    }
+  })
+
+  // Remove swaying animation when plant clicked
+  plantImgs.forEach(plantImg => (
+    plantImg.addEventListener("click", () => {
+      plantImg.classList.remove("animate-sway")
+    })
+  ))
+
+  // Fix back button position
   const backBtn = document.getElementById("btn-back");
   const screenHeight = window.screen.height;
 
@@ -88,14 +153,4 @@ export interface Plant {
   backBtn?.addEventListener("click", () => {
     window.location.href = "/"
   })
-
-
-  const plantImgs = document.querySelectorAll<HTMLElement>("[data-plant-btn] > img");
-  
-  // Remove swaying animation when plant clicked
-  plantImgs.forEach(plantImg => (
-    plantImg.addEventListener("click", () => {
-      plantImg.classList.remove("animate-sway")
-    })
-  ))
 </script>
