@@ -65,20 +65,20 @@ const {narrative, position, options} = Astro.props;
     const eventViewBtn = document.getElementById("event-view");
 
     plantViewBtn?.addEventListener("click", () => {
-        isPlantView.set(true);
         isHistoryView.set(false);
         isEventView.set(false);
+        isPlantView.set(true);
     })
 
     historyViewBtn?.addEventListener("click", () => {
-        isHistoryView.set(true);
         isPlantView.set(false);
         isEventView.set(false);
+        isHistoryView.set(true);
     })
 
     eventViewBtn?.addEventListener("click", () => {
-        isEventView.set(true);
         isPlantView.set(false);
         isHistoryView.set(false);
+        isEventView.set(true);
     })
 </script>
