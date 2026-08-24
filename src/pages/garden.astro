@@ -2,7 +2,7 @@
 import archieml from "archieml";
 import Plant from "../components/Plant.astro";
 import PlantModal from "../components/PlantModal.astro";
-import background from "../assets/red-background.png"
+import ustreetLogo from "../assets/ustreet-logo.png";
 import garden from "../assets/garden.png"
 import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
@@ -30,20 +30,33 @@ export interface Plant {
 ---
 
 <Layout>
-  <section class="
-    relative h-dvh w-screen overflow-hidden p-6
-    lg:flex lg:flex-row lg:items-center lg:justify-center lg:gap-12
-  ">
-    <div>
-      <Narrative narrative={[data.gardenCta]} position="top" options />
+  <section class="relative h-dvh w-screen overflow-hidden p-6">
+    <!-- Ustreet logo and next event -->
+    <div id="ustreet-logo" class="
+      absolute top-5 left-5 z-60 flex flex-row gap-4
+    ">
+      <div>
+        <a href="https://ustreetcommunity.org">
+          <img class="w-12" src={ustreetLogo.src} />
+        </a>
+      </div>
+      <div>
+        <a href={data.eventUrl}>
+          <p class="mb-0 font-narrative text-2xl underline">Next Event: {data.eventDate}</p>
+        </a>
+      </div>
     </div>
 
-    <div class="relative z-10 h-dvh w-full max-w-170">
+    <div>
+      <Narrative narrative={[data.gardenCta]} page="garden" options />
+    </div>
+
+    <div class="relative z-50 mx-auto -mt-12 h-dvh w-full max-w-170">
       <img src={garden.src} />
 
       <button id="table" class="
-        absolute top-[48%] left-1/2 z-49 -translate-x-1/2 scale-50
-        cursor-pointer
+        absolute top-85 left-95 z-49 -translate-x-1/2 cursor-pointer
+        lg:left-110 lg:w-100
       " data-modal-target="table-modal" data-modal-toggle="table-modal">
         <img id="table" src={table.src} />
       </button>
@@ -94,18 +107,18 @@ export interface Plant {
   isPlantView.subscribe((plantView) => {
     // Keep plant view button highlighted
     if (plantView) {
-      plantViewBtn?.classList.add("outline-2", "bg-gray-200")
+      plantViewBtn?.classList.add("bg-gray-200")
     } else {
-      plantViewBtn?.classList.remove("outline-2", "bg-gray-200")
+      plantViewBtn?.classList.remove("bg-gray-200")
     }
 
     // Add swaying animation to plants
     plantImgs.forEach(plantImg => {
       if (plantImg) {
         if (plantView) {
-          plantImg.classList.add("animate-sway")
+          plantImg.classList.add("animate-pulse")
         } else {
-          plantImg.classList.remove("animate-sway")
+          plantImg.classList.remove("animate-pulse")
         }
       }
     })
@@ -114,27 +127,27 @@ export interface Plant {
   isHistoryView.subscribe((historyView) => {
     if (historyView) {
       historySlider?.classList.remove("hidden");
-      historyViewBtn?.classList.add("outline-2", "bg-gray-200");
+      historyViewBtn?.classList.add("bg-gray-200");
     } else {
       historySlider?.classList.add("hidden");
-      historyViewBtn?.classList.remove("outline-2", "bg-gray-200");
+      historyViewBtn?.classList.remove("bg-gray-200");
     }
   })
 
   isEventView.subscribe((eventView) => {
     if (eventView) {
-      table?.classList.add("animate-sway");
-      eventViewBtn?.classList.add("bg-gray-200", "outline-2");
+      table?.classList.add("animate-pulse");
+      eventViewBtn?.classList.add("bg-gray-200");
     } else {
-      table?.classList.remove("animate-sway");
-      eventViewBtn?.classList.remove("bg-gray-200", "outline-2");
+      table?.classList.remove("animate-pulse");
+      eventViewBtn?.classList.remove("bg-gray-200");
     }
   })
 
   // Remove swaying animation when plant clicked
   plantImgs.forEach(plantImg => (
     plantImg.addEventListener("click", () => {
-      plantImg.classList.remove("animate-sway")
+      plantImg.classList.remove("animate-pulse")
     })
   ))
 

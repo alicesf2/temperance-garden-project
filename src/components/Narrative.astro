@@ -5,18 +5,17 @@ import speechBubble from "../assets/speech-bubble.png"
 
 interface Props {
     narrative: string[];
-    position: "top"|"bottom";
+    page: "intro"|"garden";
     options?: boolean;
 }
 
-const {narrative, position, options} = Astro.props;
+const {narrative, page, options} = Astro.props;
 ---
 
 <div id="narrative-wrapper" class={cx(`
   absolute left-1/2 z-20 flex w-full max-w-150 -translate-x-1/2 flex-row
   items-center justify-center p-4
-  lg:relative
-`, position === "top" ? `top-8` : `bottom-32`)}>
+`, page === "intro" ? `bottom-32` : `lg:relative`)}>
     <img src={keykye.src} class="
       w-20
       md:w-30
@@ -40,16 +39,16 @@ const {narrative, position, options} = Astro.props;
                   lg:flex-row lg:gap-2 lg:text-2xl
                 ">
                     <button id="plant-view" class="
-                      cursor-pointer rounded-2xl px-2 outline
-                      hover:bg-gray-200 hover:outline-2
+                      cursor-pointer rounded-2xl px-2 outline-2
+                      hover:bg-gray-200
                     ">Plant species</button>
                     <button id="history-view" class="
-                      cursor-pointer rounded-2xl px-2 outline
-                      hover:bg-gray-200 hover:outline-2
+                      cursor-pointer rounded-2xl px-2 outline-2
+                      hover:bg-gray-200
                     ">Garden history</button>
                     <button id="event-view" class="
-                      cursor-pointer rounded-2xl px-2 outline
-                      hover:bg-gray-200 hover:outline-2
+                      cursor-pointer rounded-2xl px-2 outline-2
+                      hover:bg-gray-200
                     ">Past events</button>
                 </div>
             )}
@@ -67,18 +66,18 @@ const {narrative, position, options} = Astro.props;
     plantViewBtn?.addEventListener("click", () => {
         isHistoryView.set(false);
         isEventView.set(false);
-        isPlantView.set(true);
+        isPlantView.set(!isPlantView.get());
     })
 
     historyViewBtn?.addEventListener("click", () => {
         isPlantView.set(false);
         isEventView.set(false);
-        isHistoryView.set(true);
+        isHistoryView.set(!isHistoryView.get());
     })
 
     eventViewBtn?.addEventListener("click", () => {
         isPlantView.set(false);
         isHistoryView.set(false);
-        isEventView.set(true);
+        isEventView.set(!isEventView.get());
     })
 </script>
