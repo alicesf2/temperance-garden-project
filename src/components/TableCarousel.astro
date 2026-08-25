@@ -1,15 +1,17 @@
 ---
 import "../styles/global.css"
 import archieml from "archieml";
-import pic1 from "../assets/sanctuary-sign.jpg";
-import pic2 from "../assets/sanctuary-view.jpg";
-import pic3 from "../assets/sanctuary-key.jpg";
+import TableSlide from "./TableSlide.astro";
+import back from "../assets/back.png"
+import next from "../assets/next.png"
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
 const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
 const text = await fetch(url).then((res) => res.text());
 const data = archieml.load(text);
+
+const events = data.events;
 
 export interface Event {
   id: string;
@@ -22,44 +24,27 @@ export interface Event {
 <div class="embla relative size-full">
     <div class="embla__viewport h-[85%] w-full overflow-y-scroll">
         <div class="embla__container flex touch-pan-y">
-            <!-- Slide 1 -->
-            <div class="embla__slide min-w-0 flex-[0_0_100%]">
-                <h1 class="text-3xl">{data.events[0].title}</h1>
-                <p class="text-xl">{data.events[0].date}</p>
-                <p class="text-2xl/snug">{data.events[0].description}</p>
-                <div class="flex flex-col gap-4">
-                    {[pic1, pic2, pic3].map(pic => (
-                        <img src={pic.src} />
-                        <figcaption>Photo caption</figcaption>
-                    ))}
-                </div>
-            </div>
-            <!-- Slide 2 -->
-            <div class="embla__slide min-w-0 flex-[0_0_100%]">
-                <h1 class="text-3xl">{data.events[1].title}</h1>
-                <p class="text-xl">{data.events[1].date}</p>
-                <p class="text-2xl/snug">{data.events[1].description}</p>
-                <div class="flex flex-col gap-4">
-                    {[pic1, pic2, pic3].map(pic => (
-                        <img src={pic.src} />
-                    ))}
-                </div>
-            </div>
-            <!-- Slide 3 -->
-            <div class="embla__slide min-w-0 flex-[0_0_100%]">Slide 3</div>
+            {events.map((event: Event) => <TableSlide event={event} />)}
         </div>
     </div>
 
     <div class="embla__dots flex h-4 justify-center gap-2 py-2"></div>
 
-    <button class="
-      embla__prev hidden
-      lg:flex
-    ">Scroll to prev</button>
-    <button class="
-      embla__next hidden
-      lg:flex
-    ">Scroll to next</button>
+    <div class="mt-6 flex flex-row justify-center gap-8">
+        <button class="
+          embla__prev hidden cursor-pointer
+          lg:flex
+        ">
+            <img src={back.src} class="h-15 w-auto" />
+        </button>
+        <button class="
+          embla__next hidden cursor-pointer
+          lg:flex
+        ">
+            <img src={next.src} class="h-15 w-auto" />
+        </button>
+    </div>
+    
 </div>
 
 <script>

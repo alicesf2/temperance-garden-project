@@ -15,7 +15,9 @@ const { id, imgSrc, imgWidth, class: className, modalTarget } = Astro.props;
 
 <button
   id={`${id}-btn`}
-  class={cx("z-10", className)}
+  class={cx(`z-10`, className, modalTarget && `
+    hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]
+  `)}
   data-modal-target={modalTarget}
   data-modal-toggle={modalTarget}
   data-plant-btn
