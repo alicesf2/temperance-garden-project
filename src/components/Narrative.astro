@@ -2,6 +2,7 @@
 import { cx } from "../lib/utils";
 import keykye from "../assets/keykye.png"
 import speechBubble from "../assets/speech-bubble.png"
+import ViewSelectDropdown from "./ViewSelectDropdown.astro";
 
 interface Props {
     narrative: string[];
@@ -23,7 +24,7 @@ const {narrative, page, options} = Astro.props;
     <div id="narrative-speech" class="relative">
         <img src={speechBubble.src} />
         <div id="narrative" class="
-          absolute inset-0 ml-6 w-full px-6 py-3 font-narrative text-3xl/6
+          absolute inset-0 ml-6 px-6 py-3 font-narrative text-3xl/6
           lg:ml-8 lg:px-10 lg:py-4 lg:text-4xl/8
         ">
             {
@@ -34,9 +35,10 @@ const {narrative, page, options} = Astro.props;
                 ))
             }
             {options && (
+              <>
                 <div class="
-                  mt-2 flex flex-col gap-2 text-lg
-                  lg:flex-row lg:gap-2 lg:text-2xl
+                  mt-2 hidden flex-col gap-2 text-lg
+                  lg:flex lg:flex-row lg:gap-2 lg:text-2xl
                 ">
                     <button id="plant-view" class="
                       cursor-pointer rounded-2xl px-2 outline-2
@@ -51,6 +53,8 @@ const {narrative, page, options} = Astro.props;
                       hover:bg-gray-200
                     ">Past events</button>
                 </div>
+                <ViewSelectDropdown />
+              </>
             )}
         </div>
     </div>
@@ -79,5 +83,24 @@ const {narrative, page, options} = Astro.props;
         isPlantView.set(false);
         isHistoryView.set(false);
         isEventView.set(!isEventView.get());
+    })
+
+    // Handle dropdown select on mobile
+    const viewSelector = document.getElementById("view") as HTMLSelectElement;
+    viewSelector?.addEventListener("change", () => {
+      switch (viewSelector.value) {
+        case "plants":
+          isHistoryView.set(false);
+          isEventView.set(false);
+          isPlantView.set(!isPlantView.get());
+        case "history":
+          isPlantView.set(false);
+          isEventView.set(false);
+          isHistoryView.set(!isHistoryView.get());
+        case "events":
+          isPlantView.set(false);
+          isHistoryView.set(false);
+          isEventView.set(!isEventView.get());
+      }
     })
 </script>

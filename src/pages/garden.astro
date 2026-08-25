@@ -51,12 +51,16 @@ export interface Plant {
       <Narrative narrative={[data.gardenCta]} page="garden" options />
     </div>
 
-    <div class="relative z-50 mx-auto -mt-12 h-dvh w-full max-w-170">
+    <div class="
+      relative z-50 mx-auto flex h-dvh w-full max-w-170 flex-col items-center
+      justify-center gap-4
+      lg:-mt-12
+    ">
       <img src={garden.src} />
 
       <button id="table" class="
-        absolute top-85 left-95 z-49 -translate-x-1/2 cursor-pointer
-        lg:left-110 lg:w-100
+        absolute top-105 left-1/2 z-49 w-30 -translate-x-1/2 cursor-pointer
+        lg:top-85 lg:left-95 lg:w-100
       " data-modal-target="table-modal" data-modal-toggle="table-modal">
         <img id="table" class="hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]" src={table.src} />
       </button>
