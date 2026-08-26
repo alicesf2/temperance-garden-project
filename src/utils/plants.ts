@@ -9,7 +9,7 @@ export const plants = [
     imgSrc: primrose.src,
     imgWidth: 175,
     class:
-      "absolute -bottom-10 -left-12 lg:top-100 lg:-left-10 scale-40 [--glow-opacity:0.5] [--glow-size:60px]",
+      "absolute bottom-4 -left-15 lg:top-100 lg:-left-10 scale-40 [--glow-opacity:0.5] [--glow-size:60px]",
     modalWidth: 150,
     modalClass: "relative",
   },

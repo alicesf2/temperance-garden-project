@@ -38,7 +38,7 @@ export interface Plant {
 
     <!-- Interactive garden section -->
     <div class="
-      absolute top-10 bottom-0 flex items-center justify-center
+      absolute top-25 bottom-0 flex items-center justify-center
       short:top-40 short:bottom-0
     ">
       <div class="
@@ -71,17 +71,15 @@ export interface Plant {
 
         <!-- Render table modal element -->
         <TableModal />
-      </div>
-    </div>
 
-    <!-- Footer nav area -->
-    <div class="
-      absolute bottom-4 flex w-[90%] flex-row justify-between gap-8 px-4
-    ">
-      <button id="btn-back" type="button" class="left-[-9%]">
-        <img src={back.src} class="h-18 w-auto" />
-      </button>
-      <input id="history-slider" type="range" min="0" max="1" step="0.2" value="1" />
+        <!-- Back button and slider area -->
+        <div class="flex w-[90%] flex-row justify-between gap-8 px-4">
+          <button id="btn-back" type="button" class="left-[-9%] cursor-pointer">
+            <img src={back.src} class="h-18 w-auto" />
+          </button>
+          <input id="history-slider" type="range" min="0" max="1" step="0.2" value="1" />
+        </div>
+      </div>
     </div>
   </section>
 </Layout>
