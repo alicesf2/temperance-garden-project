@@ -3,13 +3,13 @@ import Layout from "../layouts/Layout.astro";
 import archieml from "archieml";
 import gatesClosed from "../assets/gates-closed.png";
 import gatesOpen from "../assets/gates-open.png";
-import ustreetLogo from "../assets/ustreet-logo.png";
 import start from "../assets/start.png";
 import back from "../assets/back.png"
 import next from "../assets/next.png"
 import enter from "../assets/enter.png"
 import "../styles/global.css";
 import Narrative from "../components/Narrative.astro";
+import Logo from "../components/Logo.astro";
 import { cx } from "../lib/utils";
 
 // Load data from TAG google doc
@@ -32,20 +32,7 @@ const data = archieml.load(text);
         duration-700
       " />
       <!-- Ustreet logo and next event -->
-      <div id="ustreet-logo" class="
-        absolute top-5 left-5 z-20 flex flex-row gap-4
-      ">
-        <div>
-          <a href="https://ustreetcommunity.org">
-            <img class="w-12" src={ustreetLogo.src} />
-          </a>
-        </div>
-        <div>
-          <a href={data.eventUrl}>
-            <p class="mb-0 font-narrative text-2xl underline">Next Event: {data.eventDate}</p>
-          </a>
-        </div>
-      </div>
+      <Logo />
 
       <!-- Narrative and nav buttons -->
       <Narrative narrative={data.narrative} page="intro" />
