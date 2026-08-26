@@ -1,0 +1,25 @@
+---
+import ustreetLogo from "../assets/ustreet-logo.png";
+
+interface Props {
+    eventUrl?: string;
+    eventDate?: string;
+}
+
+const {eventUrl, eventDate} = Astro.props;
+---
+
+<div id="ustreet-logo" class="absolute top-5 left-5 z-20 flex flex-row gap-4">
+    <div>
+        <a href="https://ustreetcommunity.org">
+            <img class="w-10" src={ustreetLogo.src} />
+        </a>
+    </div>
+    {eventUrl && (
+        <div>
+            <a href={eventUrl}>
+                <p class="mb-0 font-narrative text-2xl underline">Next Event: {eventDate}</p>
+            </a>
+        </div>
+    )}
+</div>

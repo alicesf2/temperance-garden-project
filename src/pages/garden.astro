@@ -2,7 +2,6 @@
 import archieml from "archieml";
 import Plant from "../components/Plant.astro";
 import PlantModal from "../components/PlantModal.astro";
-import ustreetLogo from "../assets/ustreet-logo.png";
 import garden from "../assets/garden.png"
 import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
@@ -12,6 +11,7 @@ import table from "../assets/table.png"
 import { plants } from "../utils/plants";
 import { cx } from "../lib/utils";
 import TableModal from "../components/TableModal.astro";
+import Logo from "../components/Logo.astro";
 
 // Load data from TAG google doc
 const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
@@ -30,66 +30,58 @@ export interface Plant {
 ---
 
 <Layout>
-  <section class="relative h-dvh w-screen overflow-hidden p-6">
-    <!-- Ustreet logo and next event -->
-    <div id="ustreet-logo" class="
-      absolute top-5 left-5 z-60 flex flex-row gap-4
-    ">
-      <div>
-        <a href="https://ustreetcommunity.org">
-          <img class="w-12" src={ustreetLogo.src} />
-        </a>
-      </div>
-      <div>
-        <a href={data.eventUrl}>
-          <p class="mb-0 font-narrative text-2xl underline">Next Event: {data.eventDate}</p>
-        </a>
-      </div>
-    </div>
+  <section class="
+    relative flex h-dvh w-screen flex-col gap-8 overflow-hidden p-6
+  ">
+    <Logo />
+    <Narrative narrative={[data.gardenCta]} page="garden" options />
 
-    <div>
-      <Narrative narrative={[data.gardenCta]} page="garden" options />
-    </div>
-
+    <!-- Interactive garden section -->
     <div class="
-      relative z-50 mx-auto flex h-dvh w-full max-w-170 flex-col items-center
-      justify-center gap-4
-      lg:-mt-12
+      absolute top-10 bottom-0 flex items-center justify-center
+      short:top-40 short:bottom-0
     ">
-      <img src={garden.src} />
-
-      <button id="table" class="
-        absolute top-105 left-1/2 z-49 w-30 -translate-x-1/2 cursor-pointer
-        lg:top-85 lg:left-95 lg:w-100
-      " data-modal-target="table-modal" data-modal-toggle="table-modal">
-        <img id="table" class="hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]" src={table.src} />
-      </button>
-
-      <!-- Render clickable plant images -->
-      {plants.map(plant => (
-        <Plant
-          id={plant.id}
-          imgSrc={plant.imgSrc}
-          imgWidth={plant.imgWidth}
-          class={plant.class}
-          modalTarget={`${plant.id}-modal`}
-        />
-      ))}
-
-      <!-- Render plant modal elements -->
-      {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
-
-      <!-- Render table modal element -->
-      <TableModal />
-
       <div class="
-        absolute bottom-4 flex w-[90%] flex-row justify-between gap-8 px-4
+        relative z-50 mx-auto flex w-full max-w-170 flex-col items-center
+        justify-center gap-4
+        lg:-mt-12
       ">
-        <button id="btn-back" type="button" class="left-[-9%]">
-          <img src={back.src} class="h-18 w-auto" />
+        <img src={garden.src} />
+
+        <button id="table" class="
+          absolute top-45 left-1/2 z-49 w-25 -translate-x-1/2 cursor-pointer
+          lg:top-85 lg:left-95 lg:w-100
+        " data-modal-target="table-modal" data-modal-toggle="table-modal">
+          <img id="table" class="hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]" src={table.src} />
         </button>
-        <input id="history-slider" type="range" min="0" max="1" step="0.2" value="1" />
+
+        <!-- Render clickable plant images -->
+        {plants.map(plant => (
+          <Plant
+            id={plant.id}
+            imgSrc={plant.imgSrc}
+            imgWidth={plant.imgWidth}
+            class={plant.class}
+            modalTarget={`${plant.id}-modal`}
+          />
+        ))}
+
+        <!-- Render plant modal elements -->
+        {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
+
+        <!-- Render table modal element -->
+        <TableModal />
       </div>
+    </div>
+
+    <!-- Footer nav area -->
+    <div class="
+      absolute bottom-4 flex w-[90%] flex-row justify-between gap-8 px-4
+    ">
+      <button id="btn-back" type="button" class="left-[-9%]">
+        <img src={back.src} class="h-18 w-auto" />
+      </button>
+      <input id="history-slider" type="range" min="0" max="1" step="0.2" value="1" />
     </div>
   </section>
 </Layout>
