@@ -18,14 +18,17 @@ const { narrative, page, options } = Astro.props;
   items-center justify-center p-4
 `, page === "intro" ? `bottom-32` : `
   top-15
-  lg:relative
+  lg:relative lg:top-0
 `)}>
     <img src={keykye.src} class="
       w-20
       md:w-30
     " />
     <div id="narrative-speech" class="relative">
-        <img src={speechBubble.src} class="h-30 w-auto" />
+        <img src={speechBubble.src} class="
+          h-30 w-auto
+          lg:h-auto lg:w-200
+        " />
         <div id="narrative" class="
           absolute inset-0 ml-6 px-6 py-3 font-narrative text-3xl/6
           lg:ml-8 lg:px-10 lg:py-4 lg:text-4xl/8
@@ -44,15 +47,18 @@ const { narrative, page, options } = Astro.props;
                   lg:flex lg:flex-row lg:gap-2 lg:text-2xl
                 ">
                     <button id="plant-view" class="
-                      cursor-pointer rounded-2xl px-2 outline-2
+                      cursor-pointer rounded-2xl px-2 whitespace-nowrap
+                      outline-2
                       hover:bg-gray-200
                     ">Plant species</button>
                     <button id="history-view" class="
-                      cursor-pointer rounded-2xl px-2 outline-2
+                      cursor-pointer rounded-2xl px-2 whitespace-nowrap
+                      outline-2
                       hover:bg-gray-200
                     ">Garden history</button>
                     <button id="event-view" class="
-                      cursor-pointer rounded-2xl px-2 outline-2
+                      cursor-pointer rounded-2xl px-2 whitespace-nowrap
+                      outline-2
                       hover:bg-gray-200
                     ">Past events</button>
                 </div>

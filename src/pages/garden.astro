@@ -39,18 +39,19 @@ export interface Plant {
     <!-- Interactive garden section -->
     <div class="
       absolute top-25 bottom-0 flex items-center justify-center
+      lg:left-1/2 lg:-translate-x-1/2
       short:top-40 short:bottom-0
     ">
       <div class="
         relative z-50 mx-auto flex w-full max-w-170 flex-col items-center
         justify-center gap-4
-        lg:-mt-12
+        lg:mt-20 lg:scale-90
       ">
         <img src={garden.src} />
 
         <button id="table" class="
           absolute top-45 left-1/2 z-49 w-25 -translate-x-1/2 cursor-pointer
-          lg:top-85 lg:left-95 lg:w-100
+          lg:top-85 lg:left-110 lg:w-100
         " data-modal-target="table-modal" data-modal-toggle="table-modal">
           <img id="table" class="hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]" src={table.src} />
         </button>
@@ -60,7 +61,6 @@ export interface Plant {
           <Plant
             id={plant.id}
             imgSrc={plant.imgSrc}
-            imgWidth={plant.imgWidth}
             class={plant.class}
             modalTarget={`${plant.id}-modal`}
           />

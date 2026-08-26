@@ -7,9 +7,7 @@ export const plants = [
   {
     id: "primrose",
     imgSrc: primrose.src,
-    imgWidth: 175,
-    class:
-      "absolute bottom-4 -left-15 lg:top-100 lg:-left-10 scale-40 [--glow-opacity:0.5] [--glow-size:60px]",
+    class: "absolute bottom-30 left-0 lg:bottom-40 w-[70px] lg:w-[90px]",
     modalWidth: 150,
     modalClass: "relative",
   },
@@ -18,17 +16,15 @@ export const plants = [
     imgSrc: redbud.src,
     imgWidth: 700,
     imgWidthLg: 480,
-    class:
-      "absolute top-15 left-30 lg:top-20 lg:left-50 [--glow-inner:15px] [--glow-opacity:0.3] [--glow-size:30px] scale-70",
+    class: "absolute top-15 left-30 lg:top-20 lg:left-50 scale-70",
     modalWidth: 480,
     modalClass: "relative",
   },
   {
     id: "american-elm",
     imgSrc: americanElm.src,
-    imgWidth: 150,
-    imgWidthLg: 200,
-    class: "absolute -top-15 left-0 lg:top-0 lg:left-0",
+    class:
+      "absolute -top-15 -left-5 lg:-top-15 lg:left-0 w-[150px] lg:w-[250px]",
     modalWidth: 190,
     modalClass: "relative",
   },
@@ -36,7 +32,8 @@ export const plants = [
     id: "eastern-red-cedar",
     imgSrc: easternRedCedar.src,
     imgWidth: 150,
-    class: "absolute -top-15 -left-8 lg:top-20 lg:-left-5",
+    class:
+      "absolute -top-5 -left-8 lg:top-0 lg:-left-10 w-[120px] lg:w-[215px]",
     modalWidth: 220,
     modalClass: "relative",
   },

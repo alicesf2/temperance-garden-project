@@ -5,12 +5,11 @@ import "../styles/global.css";
 interface Props {
   id: string;
   imgSrc: string;
-  imgWidth: number;
   class?: string;
   modalTarget?: string;
 }
 
-const { id, imgSrc, imgWidth, class: className, modalTarget } = Astro.props;
+const { id, imgSrc, class: className, modalTarget } = Astro.props;
 ---
 
 <button
@@ -26,6 +25,5 @@ const { id, imgSrc, imgWidth, class: className, modalTarget } = Astro.props;
   <img
     src={imgSrc}
     class="cursor-pointer"
-    width={`${imgWidth}px`}
   />
 </button>

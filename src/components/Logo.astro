@@ -12,7 +12,10 @@ const {eventUrl, eventDate} = Astro.props;
 <div id="ustreet-logo" class="absolute top-5 left-5 z-20 flex flex-row gap-4">
     <div>
         <a href="https://ustreetcommunity.org">
-            <img class="w-10" src={ustreetLogo.src} />
+            <img class="
+              w-10
+              lg:w-15
+            " src={ustreetLogo.src} />
         </a>
     </div>
     {eventUrl && (
