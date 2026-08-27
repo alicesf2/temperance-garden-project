@@ -5,25 +5,34 @@ import "../styles/global.css";
 interface Props {
   id: string;
   imgSrc: string;
+  variant: "btn"|"img";
   class?: string;
   modalTarget?: string;
 }
 
-const { id, imgSrc, class: className, modalTarget } = Astro.props;
+const { id, imgSrc, variant, class: className, modalTarget } = Astro.props;
 ---
 
-<button
-  id={`${id}-btn`}
-  class={cx(`z-10`, className, modalTarget && `
-    hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]
-  `)}
-  data-modal-target={modalTarget}
-  data-modal-toggle={modalTarget}
-  data-plant-btn
-  type="button"
->
-  <img
-    src={imgSrc}
-    class="cursor-pointer"
-  />
-</button>
+{variant === "btn" ? (
+  <button
+    id={`${id}-btn`}
+    class={cx(`
+      z-10
+      hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]
+    `, className)}
+    data-modal-target={modalTarget}
+    data-modal-toggle={modalTarget}
+    data-plant-btn
+    type="button"
+  >
+    <img
+      src={imgSrc}
+      class="cursor-pointer"
+    />
+  </button>
+) : (
+    <img
+      src={imgSrc}
+    />
+)}
+
