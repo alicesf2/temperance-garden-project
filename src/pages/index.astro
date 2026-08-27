@@ -38,14 +38,18 @@ const data = archieml.load(text);
       <Narrative narrative={data.narrative} page="intro" />
 
       <button id="btn-start" type="button" class="
-        absolute bottom-12 left-1/2 w-40 -translate-x-1/2
+        absolute bottom-12 left-1/2 w-40 -translate-x-1/2 cursor-pointer
       "><img src={start.src} /></button>
       <div id="btn-container" class="
         absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-row gap-12
       ">
-        <button id="btn-back" type="button"><img src={back.src} class="w-20" /></button>
-        <button id="btn-next" type="button"><img src={next.src} class="w-20" /></button>
-        <button id="btn-enter" type="button" class="hidden"><img src={enter.src} class="
+        <button id="btn-back" type="button"><img src={back.src} class="
+          w-20 cursor-pointer
+        " /></button>
+        <button id="btn-next" type="button"><img src={next.src} class="
+          w-20 cursor-pointer
+        " /></button>
+        <button id="btn-enter" type="button" class="hidden cursor-pointer"><img src={enter.src} class="
           w-20
         " /></button>
       </div>
