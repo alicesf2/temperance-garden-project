@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css"
 import Plant from "./Plant.astro";
+import back from "../assets/back.png"
+import next from "../assets/next.png"
 
 const { id, description, gifts } = Astro.props;
 const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
@@ -18,6 +20,7 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
                     imgSrc={imgSrc}
                     variant="img"
                     class={modalClass}
+                    modalWidth={modalWidth}
                 />
                 <p class="text-3xl/snug text-body">
                     {description}
@@ -39,14 +42,20 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
 
     <div class="embla__dots flex h-4 justify-center gap-2"></div>
 
-    <button class="
-      embla__prev hidden
-      lg:flex
-    ">Scroll to prev</button>
-    <button class="
-      embla__next hidden
-      lg:flex
-    ">Scroll to next</button>
+    <div class="mt-6 flex flex-row justify-center gap-8">
+        <button class="
+          embla__prev hidden cursor-pointer
+          lg:flex
+        ">
+            <img src={back.src} class="h-15 w-auto" />
+        </button>
+        <button class="
+          embla__next hidden cursor-pointer
+          lg:flex
+        ">
+            <img src={next.src} class="h-15 w-auto" />
+        </button>
+    </div>
 </div>
 
 <script>

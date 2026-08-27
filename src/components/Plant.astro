@@ -8,9 +8,10 @@ interface Props {
   variant: "btn"|"img";
   class?: string;
   modalTarget?: string;
+  modalWidth?: number;
 }
 
-const { id, imgSrc, variant, class: className, modalTarget } = Astro.props;
+const { id, imgSrc, variant, class: className, modalTarget, modalWidth } = Astro.props;
 ---
 
 {variant === "btn" ? (
@@ -33,6 +34,7 @@ const { id, imgSrc, variant, class: className, modalTarget } = Astro.props;
 ) : (
     <img
       src={imgSrc}
+      width={modalWidth}
     />
 )}
 

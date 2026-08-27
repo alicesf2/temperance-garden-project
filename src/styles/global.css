@@ -3,7 +3,7 @@
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 
-@custom-variant short (@media (max-height: 700px));
+@custom-variant short (@media (max-height: 630px));
 
 @theme inline {
   --font-narrative: var(--font-dokdo);
