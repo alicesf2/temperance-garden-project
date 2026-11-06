@@ -19,13 +19,20 @@ const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
 const text = await fetch(url).then((res) => res.text());
 const data = archieml.load(text);
 
+console.log(data.plants)
+
+export interface Gift {
+    description: string;
+    sources: string[];
+}
+
 export interface Plant {
   id: string;
   title: string;
   scientific: string;
   description: string;
   modalPosition: "top"|"bottom";
-  gifts: string[];
+  gifts: Gift[];
 }
 ---
 
@@ -44,7 +51,7 @@ export interface Plant {
       <div class="
         relative z-30 mx-auto flex w-full max-w-170 flex-col items-center
         justify-center gap-4
-        lg:mt-20 lg:scale-90
+        lg:mt-20 lg:scale-80
       ">
         <img src={garden.src} />
 
@@ -97,24 +104,28 @@ export interface Plant {
   const eventViewBtn = document.getElementById("event-view");
 
   const historySlider = document.getElementById("history-slider");
-
   const table = document.getElementById("table");
+  const narrativeText = document.getElementById("narrative-text");
 
   isPlantView.subscribe((plantView) => {
     // Keep plant view button highlighted
     if (plantView) {
-      plantViewBtn?.classList.add("bg-gray-200")
+      plantViewBtn?.classList.add("bg-gray-300")
+      // Change speech bubble text
+      if (narrativeText) {
+        narrativeText.textContent = "Click each plant below to learn more about its properties."
+      }
     } else {
-      plantViewBtn?.classList.remove("bg-gray-200")
+      plantViewBtn?.classList.remove("bg-gray-300");
     }
 
     // Add swaying animation to plants
     plantImgs.forEach(plantImg => {
       if (plantImg) {
         if (plantView) {
-          plantImg.classList.add("animate-pulse")
+          plantImg.classList.add("animate-sway")
         } else {
-          plantImg.classList.remove("animate-pulse")
+          plantImg.classList.remove("animate-sway")
         }
       }
     })
@@ -123,32 +134,40 @@ export interface Plant {
   isHistoryView.subscribe((historyView) => {
     if (historyView) {
       historySlider?.classList.remove("hidden");
-      historyViewBtn?.classList.add("bg-gray-200");
+      historyViewBtn?.classList.add("bg-gray-300");
+
+      if (narrativeText) {
+        narrativeText.textContent = "Drag the slider below to learn more about the garden's history."
+      }
     } else {
       historySlider?.classList.add("hidden");
-      historyViewBtn?.classList.remove("bg-gray-200");
+      historyViewBtn?.classList.remove("bg-gray-300");
     }
   })
 
   isEventView.subscribe((eventView) => {
     if (eventView) {
-      table?.classList.add("animate-pulse");
-      eventViewBtn?.classList.add("bg-gray-200");
+      table?.classList.add("animate-sway");
+      eventViewBtn?.classList.add("bg-gray-300");
+
+      if (narrativeText) {
+        narrativeText.textContent = "Click the picnic table below to view past events."
+      }
     } else {
-      table?.classList.remove("animate-pulse");
-      eventViewBtn?.classList.remove("bg-gray-200");
+      table?.classList.remove("animate-sway");
+      eventViewBtn?.classList.remove("bg-gray-300");
     }
   })
 
   // Remove pulsing animation when plant/table clicked
   plantImgs.forEach(plantImg => (
     plantImg.addEventListener("click", () => {
-      plantImg.classList.remove("animate-pulse")
+      plantImg.classList.remove("animate-sway")
     })
   ))
 
   table?.addEventListener("click", () => {
-    table.classList.remove("animate-pulse");
+    table.classList.remove("animate-sway");
   })
 
   // Fix back button position

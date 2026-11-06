@@ -6,6 +6,11 @@ import next from "../assets/next.png"
 
 const { id, description, gifts } = Astro.props;
 const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
+
+interface Gift {
+    description: string;
+    sources: string[];
+}
 ---
 
 <div class="embla relative size-full">
@@ -27,14 +32,22 @@ const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant
                 </p>
             </div>
             <!-- Slide 2 -->
-            <div class="embla__slide min-w-0 flex-[0_0_100%]">
+            <!-- <div class="embla__slide min-w-0 flex-[0_0_100%]">
                 <h2 class="text-4xl">Gifts</h2>
-                {gifts.map((gift: string, i: number) => (
-                    <span class="text-3xl/snug text-body">
-                        {gift}{i < gifts.length - 1 && ", "}
-                    </span>
-                ))}
-            </div>
+                <ul class="ml-8 list-disc text-2xl">
+                    {gifts.map((gift: Gift) => (
+                        <li>
+                            <span>{gift.description}</span>
+                            <span>{gift.sources.map((source: string, i: number) => (
+                                <span>
+                                    <a href={source}>{`[${i}]`}</a>
+                                </span>
+                            ))}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            </div> -->
             <!-- Slide 3 -->
             <div class="embla__slide min-w-0 flex-[0_0_100%]">Slide 3</div>
         </div>

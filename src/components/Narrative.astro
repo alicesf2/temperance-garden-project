@@ -18,7 +18,7 @@ const { narrative, page, options } = Astro.props;
   items-center justify-center p-4
 `, page === "intro" ? `bottom-32` : `
   top-15
-  lg:relative
+  lg:relative lg:top-6
 `)}>
     <img src={keykye.src} class="
       w-20
@@ -28,45 +28,42 @@ const { narrative, page, options } = Astro.props;
         <img src={speechBubble.src} class={cx(
           `
             h-30 w-auto
-            lg:h-auto lg:w-200
+            lg:h-auto lg:w-105
           `, page === "garden" && "h-32"
         )} />
         <div id="narrative" class="
-          absolute inset-0 ml-10 px-2 py-4 font-narrative text-3xl/6
-          lg:ml-8 lg:px-10 lg:py-4 lg:text-4xl/8
+          absolute inset-0 ml-10 px-2 py-4 font-narrative text-2xl/6
+          lg:ml-8 lg:px-10 lg:py-4 lg:text-3xl/8
         ">
+          <div id="narrative-text">
             {
-                narrative.map((line: string, i: number) => (
-                    <p id={`narrative-${i}`} class={i == 0 ? "visible" : `
-                      hidden
-                    `}>{line}</p>
-                ))
+              narrative.map((line: string, i: number) => (
+                  <p id={`narrative-${i}`} class={i == 0 ? "visible" : `hidden`}>{line}</p>
+              ))
             }
-            {options && (
-              <>
-                <div class="
-                  mt-2 hidden flex-col gap-2 text-lg
-                  lg:flex lg:flex-row lg:gap-2 lg:text-2xl
-                ">
-                    <button id="plant-view" class="
-                      cursor-pointer rounded-2xl px-2 whitespace-nowrap
-                      outline-2
-                      hover:bg-gray-200
-                    ">Plant species</button>
-                    <button id="history-view" class="
-                      cursor-pointer rounded-2xl px-2 whitespace-nowrap
-                      outline-2
-                      hover:bg-gray-200
-                    ">Garden history</button>
-                    <button id="event-view" class="
-                      cursor-pointer rounded-2xl px-2 whitespace-nowrap
-                      outline-2
-                      hover:bg-gray-200
-                    ">Past events</button>
-                </div>
-                <ViewSelectDropdown />
-              </>
-            )}
+          </div>
+          {options && (
+            <>
+              <div class="
+                mt-2 hidden flex-col gap-2 text-lg
+                lg:flex lg:flex-row lg:gap-2 lg:text-2xl
+              ">
+                  <button id="plant-view" class="
+                    cursor-pointer rounded-2xl px-4 whitespace-nowrap outline-2
+                    hover:bg-gray-200
+                  ">Plants</button>
+                  <button id="history-view" class="
+                    cursor-pointer rounded-2xl px-4 whitespace-nowrap outline-2
+                    hover:bg-gray-200
+                  ">History</button>
+                  <button id="event-view" class="
+                    cursor-pointer rounded-2xl px-4 whitespace-nowrap outline-2
+                    hover:bg-gray-200
+                  ">Events</button>
+              </div>
+              <ViewSelectDropdown />
+            </>
+          )}
         </div>
     </div>
 </div>
@@ -74,6 +71,7 @@ const { narrative, page, options } = Astro.props;
 <script>
     import { isPlantView, isEventView, isHistoryView } from "../stores/garden";
 
+    // Switch views on desktop
     const plantViewBtn = document.getElementById("plant-view");
     const historyViewBtn = document.getElementById("history-view");
     const eventViewBtn = document.getElementById("event-view");
@@ -96,7 +94,7 @@ const { narrative, page, options } = Astro.props;
         isEventView.set(!isEventView.get());
     })
 
-    // Handle dropdown select on mobile
+    // Switch views on mobile
     const viewSelector = document.getElementById("view") as HTMLSelectElement;
     viewSelector?.addEventListener("change", () => {
       switch (viewSelector.value) {

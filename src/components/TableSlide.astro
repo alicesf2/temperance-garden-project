@@ -1,7 +1,5 @@
 ---
-import pic1 from "../assets/sanctuary-sign.jpg";
-import pic2 from "../assets/sanctuary-view.jpg";
-import pic3 from "../assets/sanctuary-key.jpg";
+import SanityImage from "./SanityImage.astro";
 
 const { event } = Astro.props;
 ---
@@ -10,7 +8,7 @@ const { event } = Astro.props;
     <h1 class="
       text-3xl
       lg:text-4xl
-    ">{event.title}</h1>
+    ">{event.name}</h1>
     <p class="
       text-xl
       lg:text-2xl
@@ -20,8 +18,8 @@ const { event } = Astro.props;
       lg:mb-8
     ">{event.description}</p>
     <div class="flex flex-col gap-8">
-        {[pic1, pic2, pic3].map(pic => (
-            <img src={pic.src} />
+        {event.images && event.images.map(image => (
+            <SanityImage image={image} alt="placeholder"/>
             <figcaption>Photo caption</figcaption>
         ))}
     </div>

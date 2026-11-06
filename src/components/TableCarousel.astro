@@ -4,21 +4,25 @@ import archieml from "archieml";
 import TableSlide from "./TableSlide.astro";
 import back from "../assets/back.png"
 import next from "../assets/next.png"
+import { sanityClient } from "sanity:client";
+import SanityImage from "../components/SanityImage.astro"
 
-// Load data from TAG google doc
-const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
-const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
-const text = await fetch(url).then((res) => res.text());
-const data = archieml.load(text);
-
-const events = data.events;
-
-export interface Event {
-  id: string;
-  title: string;
+interface Event {
+  name: string;
   date: string;
   description: string;
+  images: any[];
 }
+
+// Query projects from Sanity CMS
+const EVENTS_QUERY = `*[
+  _type == "event"
+]|order(date desc){name, date, description, images}`;
+
+const events = await sanityClient.fetch<Event[]>(EVENTS_QUERY);
+
+console.log(events)
+
 ---
 
 <div class="embla relative size-full">

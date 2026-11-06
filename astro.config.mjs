@@ -2,13 +2,17 @@
 import { defineConfig, fontProviders } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
+import sanity from "@sanity/astro";
+
 // https://astro.build/config
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+
   site: "https://sanctuary.ustreetcommunity.org",
   base: "/",
+
   fonts: [
     {
       provider: fontProviders.fontsource(),
@@ -30,5 +34,12 @@ export default defineConfig({
       name: "Lacquer",
       cssVariable: "--font-lacquer",
     },
+  ],
+  integrations: [
+    sanity({
+      projectId: "2r5p4ytl",
+      dataset: "production",
+      useCdn: false,
+    }),
   ],
 });
