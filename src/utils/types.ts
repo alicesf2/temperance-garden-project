@@ -14,5 +14,9 @@ export interface PlantType {
 
 export interface NarrativeType {
     text: string[];
+    intro?: string;
+    plantView?: string;
+    historyView?: string;
+    eventView?: string;
 }
 

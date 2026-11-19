@@ -2,12 +2,12 @@
 import { sanityClient } from "sanity:client";
 import Plant from "../components/Plant.astro";
 import PlantModal from "../components/PlantModal.astro";
-import garden from "../assets/garden.png"
+import garden from "../assets/garden.png";
 import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
-import Narrative from "../components/Narrative.astro";
-import back from "../assets/back.png"
-import table from "../assets/table.png"
+import NarrativeGarden from "../components/NarrativeGarden.astro";
+import back from "../assets/back.png";
+import table from "../assets/table.png";
 import { plants } from "../utils/plants";
 import { cx } from "../lib/utils";
 import TableModal from "../components/TableModal.astro";
@@ -23,40 +23,46 @@ const plantData = await sanityClient.fetch<PlantType[]>(PLANTS_QUERY);
 
 // Query narrative from Sanity
 const NARRATIVE_QUERY = `*[
-  _type == "narrative" && name == "Garden"
-]{text}`;
+  _type == "narrative" && page == "Garden"
+]{intro, plantView, historyView, eventView}[0]`;
 
-const narrativeData = await sanityClient.fetch<NarrativeType[]>(NARRATIVE_QUERY);
+const narrativeData =
+  await sanityClient.fetch<NarrativeType[]>(NARRATIVE_QUERY);
 ---
 
 <Layout>
-  <section class="
-    relative flex h-dvh w-screen flex-col gap-8 overflow-hidden p-6
-  ">
+  <section class="relative flex h-dvh w-screen flex-col gap-8 overflow-hidden p-6">
     <Logo />
-    <Narrative narrative={narrativeData} page="garden" options />
+    <NarrativeGarden narrative={narrativeData} />
 
     <!-- Interactive garden section -->
-    <div class="
-      absolute top-50 bottom-0 flex items-center justify-center
-      lg:top-30 lg:left-1/2 lg:-translate-x-1/2
-    ">
-      <div class="
-        relative z-30 mx-auto flex w-full max-w-170 flex-col items-center
+    <div
+      class="absolute top-50 bottom-0 flex items-center justify-center
+      lg:top-30 lg:left-1/2 lg:-translate-x-1/2"
+    >
+      <div
+        class="relative z-30 mx-auto flex w-full max-w-170 flex-col items-center
         justify-center gap-4
-        lg:mt-20 lg:scale-80
-      ">
+        lg:mt-20 lg:scale-80"
+      >
         <img src={garden.src} />
 
-        <button id="table" class="
-          absolute top-45 left-1/2 z-49 w-25 -translate-x-1/2 cursor-pointer
-          lg:top-85 lg:left-110 lg:w-100
-        " data-modal-target="table-modal" data-modal-toggle="table-modal">
-          <img id="table" class="hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]" src={table.src} />
+        <button
+          id="table"
+          class="absolute top-45 left-1/2 z-49 w-25 -translate-x-1/2 cursor-pointer
+          lg:top-85 lg:left-110 lg:w-100"
+          data-modal-target="table-modal"
+          data-modal-toggle="table-modal"
+        >
+          <img
+            id="table"
+            class="hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]"
+            src={table.src}
+          />
         </button>
 
         <!-- Render clickable plant images -->
-        {plants.map(plant => (
+        {plants.map((plant) => (
           <Plant
             id={plant.id}
             imgSrc={plant.imgSrc}
@@ -69,19 +75,28 @@ const narrativeData = await sanityClient.fetch<NarrativeType[]>(NARRATIVE_QUERY)
         <!-- Back button and slider area -->
         <div class="flex w-[90%] flex-row justify-between gap-8 px-4">
           <button id="btn-back" type="button" class="left-[-9%] cursor-pointer">
-            <img src={back.src} class="
-              h-18 w-auto
-              lg:h-25
-            " />
+            <img
+              src={back.src}
+              class="h-18 w-auto
+              lg:h-25"
+            />
           </button>
-          <input id="history-slider" type="range" min="0" max="1" step="0.2" value="1" />
+          <input
+            id="history-slider"
+            type="range"
+            min="0"
+            max="1"
+            step="0.2"
+            value="1"
+          />
         </div>
       </div>
-      
     </div>
   </section>
   <!-- Render plant modal elements -->
-  {plantData.map((plant: Plant) => <PlantModal plant={plant} />)}
+  {plantData.map((plant: Plant) => (
+    <PlantModal plant={plant} />
+  ))}
 
   <!-- Render table modal element -->
   <TableModal />
@@ -90,78 +105,56 @@ const narrativeData = await sanityClient.fetch<NarrativeType[]>(NARRATIVE_QUERY)
 <script>
   import { isPlantView, isEventView, isHistoryView } from "../stores/garden";
 
-  const plantImgs = document.querySelectorAll<HTMLElement>("[data-plant-btn] > img");
-
-  const plantViewBtn = document.getElementById("plant-view");
   const historyViewBtn = document.getElementById("history-view");
   const eventViewBtn = document.getElementById("event-view");
+
+  const plantImgs = document.querySelectorAll<HTMLElement>(
+    "[data-plant-btn] > img",
+  );
 
   const historySlider = document.getElementById("history-slider");
   const table = document.getElementById("table");
   const narrativeText = document.getElementById("narrative-text");
 
   isPlantView.subscribe((plantView) => {
-    // Keep plant view button highlighted
-    if (plantView) {
-      plantViewBtn?.classList.add("bg-gray-300")
-      // Change speech bubble text
-      if (narrativeText) {
-        narrativeText.textContent = "Click each plant below to learn more about its properties."
-      }
-    } else {
-      plantViewBtn?.classList.remove("bg-gray-300");
-    }
-
     // Add swaying animation to plants
-    plantImgs.forEach(plantImg => {
+    plantImgs.forEach((plantImg) => {
       if (plantImg) {
         if (plantView) {
-          plantImg.classList.add("animate-sway")
+          plantImg.classList.add("animate-sway");
         } else {
-          plantImg.classList.remove("animate-sway")
+          plantImg.classList.remove("animate-sway");
         }
       }
-    })
+    });
   });
 
   isHistoryView.subscribe((historyView) => {
     if (historyView) {
       historySlider?.classList.remove("hidden");
-      historyViewBtn?.classList.add("bg-gray-300");
-
-      if (narrativeText) {
-        narrativeText.textContent = "Drag the slider below to learn more about the garden's history."
-      }
     } else {
       historySlider?.classList.add("hidden");
-      historyViewBtn?.classList.remove("bg-gray-300");
     }
-  })
+  });
 
   isEventView.subscribe((eventView) => {
     if (eventView) {
       table?.classList.add("animate-sway");
-      eventViewBtn?.classList.add("bg-gray-300");
-
-      if (narrativeText) {
-        narrativeText.textContent = "Click the picnic table below to view past events."
-      }
     } else {
       table?.classList.remove("animate-sway");
-      eventViewBtn?.classList.remove("bg-gray-300");
     }
-  })
+  });
 
   // Remove pulsing animation when plant/table clicked
-  plantImgs.forEach(plantImg => (
+  plantImgs.forEach((plantImg) =>
     plantImg.addEventListener("click", () => {
-      plantImg.classList.remove("animate-sway")
-    })
-  ))
+      plantImg.classList.remove("animate-sway");
+    }),
+  );
 
   table?.addEventListener("click", () => {
     table.classList.remove("animate-sway");
-  })
+  });
 
   // Fix back button position
   const backBtn = document.getElementById("btn-back");
@@ -169,10 +162,10 @@ const narrativeData = await sanityClient.fetch<NarrativeType[]>(NARRATIVE_QUERY)
 
   if (screenHeight < 700) {
     backBtn?.classList.remove("bottom-2");
-    backBtn?.classList.add("bottom-[-7%]")
+    backBtn?.classList.add("bottom-[-7%]");
   }
 
   backBtn?.addEventListener("click", () => {
-    window.location.href = "/"
-  })
+    window.location.href = "/";
+  });
 </script>
