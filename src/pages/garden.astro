@@ -1,5 +1,5 @@
 ---
-import archieml from "archieml";
+import { sanityClient } from "sanity:client";
 import Plant from "../components/Plant.astro";
 import PlantModal from "../components/PlantModal.astro";
 import garden from "../assets/garden.png"
@@ -12,28 +12,21 @@ import { plants } from "../utils/plants";
 import { cx } from "../lib/utils";
 import TableModal from "../components/TableModal.astro";
 import Logo from "../components/Logo.astro";
+import type { PlantType, NarrativeType } from "../utils/types";
 
-// Load data from TAG google doc
-const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
-const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
-const text = await fetch(url).then((res) => res.text());
-const data = archieml.load(text);
+// Query plants from Sanity CMS
+const PLANTS_QUERY = `*[
+  _type == "plant"
+]|order(orderRank){name, slug, scientific, description, gifts, images}`;
 
-console.log(data.plants)
+const plantData = await sanityClient.fetch<PlantType[]>(PLANTS_QUERY);
 
-export interface Gift {
-    description: string;
-    sources: string[];
-}
+// Query narrative from Sanity
+const NARRATIVE_QUERY = `*[
+  _type == "narrative" && name == "Garden"
+]{text}`;
 
-export interface Plant {
-  id: string;
-  title: string;
-  scientific: string;
-  description: string;
-  modalPosition: "top"|"bottom";
-  gifts: Gift[];
-}
+const narrativeData = await sanityClient.fetch<NarrativeType[]>(NARRATIVE_QUERY);
 ---
 
 <Layout>
@@ -41,7 +34,7 @@ export interface Plant {
     relative flex h-dvh w-screen flex-col gap-8 overflow-hidden p-6
   ">
     <Logo />
-    <Narrative narrative={[data.gardenCta]} page="garden" options />
+    <Narrative narrative={narrativeData} page="garden" options />
 
     <!-- Interactive garden section -->
     <div class="
@@ -88,7 +81,7 @@ export interface Plant {
     </div>
   </section>
   <!-- Render plant modal elements -->
-  {data.plants.map((plant: Plant) => <PlantModal plant={plant} />)}
+  {plantData.map((plant: Plant) => <PlantModal plant={plant} />)}
 
   <!-- Render table modal element -->
   <TableModal />

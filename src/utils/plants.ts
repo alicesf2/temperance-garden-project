@@ -5,14 +5,14 @@ import easternRedCedar from "../assets/eastern-red-cedar.png";
 
 export const plants = [
   {
-    id: "primrose",
+    slug: "common-evening-primrose",
     imgSrc: primrose.src,
     class: "absolute bottom-30 left-0 lg:bottom-40 w-[70px] lg:w-[90px]",
     modalWidth: 150,
     modalClass: "relative",
   },
   {
-    id: "eastern-redbud",
+    slug: "eastern-redbud",
     imgSrc: redbud.src,
     imgWidth: 700,
     imgWidthLg: 480,
@@ -21,7 +21,7 @@ export const plants = [
     modalClass: "relative",
   },
   {
-    id: "american-elm",
+    slug: "american-elm",
     imgSrc: americanElm.src,
     class:
       "absolute -top-15 -left-5 lg:-top-15 lg:left-0 w-[150px] lg:w-[250px]",
@@ -29,7 +29,7 @@ export const plants = [
     modalClass: "relative",
   },
   {
-    id: "eastern-red-cedar",
+    slug: "eastern-red-cedar",
     imgSrc: easternRedCedar.src,
     imgWidth: 150,
     class:
