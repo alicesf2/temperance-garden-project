@@ -4,57 +4,87 @@ import archieml from "archieml";
 import gatesClosed from "../assets/gates-closed.png";
 import gatesOpen from "../assets/gates-open.png";
 import start from "../assets/start.png";
-import back from "../assets/back.png"
-import next from "../assets/next.png"
-import enter from "../assets/enter.png"
+import back from "../assets/back.png";
+import next from "../assets/next.png";
+import enter from "../assets/enter.png";
 import "../styles/global.css";
-import Narrative from "../components/Narrative.astro";
+import NarrativeIntro from "../components/NarrativeIntro.astro";
 import Logo from "../components/Logo.astro";
 import { cx } from "../lib/utils";
+import { sanityClient } from "sanity:client";
+import type { NarrativeType } from "../utils/types";
 
 // Load data from TAG google doc
-const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
-const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
-const text = await fetch(url).then((res) => res.text());
-const data = archieml.load(text);
+// const DOC_ID = "1tzmdmsrIXQ9BB5Os0J69RV7G0R4AWWXwWJwsBe2_bwo";
+// const url = `https://docs.google.com/document/d/${DOC_ID}/export?format=txt`;
+// const text = await fetch(url).then((res) => res.text());
+// const data = archieml.load(text);
+
+// Query narrative from Sanity
+const NARRATIVE_QUERY = `*[
+  _type == "narrative" && page == "Intro"
+]{text}[0]`;
+
+const narrativeData =
+  await sanityClient.fetch<NarrativeType[]>(NARRATIVE_QUERY);
+
+console.log(narrativeData);
 ---
 
 <Layout>
   <section id="landing" class="relative h-dvh w-screen overflow-hidden">
     <!-- Gate background -->
     <div class="relative z-10 mx-auto h-dvh w-full max-w-200">
-      <img id="img-gates-closed" src={gatesClosed.src} class="
-        absolute inset-0 h-dvh w-full object-cover opacity-100
-        transition-opacity duration-700
-      " />
-      <img id="img-gates-open" src={gatesOpen.src} class="
-        absolute inset-0 h-dvh w-full object-cover opacity-0 transition-opacity
-        duration-700
-      " />
+      <img
+        id="img-gates-closed"
+        src={gatesClosed.src}
+        class="absolute inset-0 h-dvh w-full object-cover opacity-100
+        transition-opacity duration-700"
+      />
+      <img
+        id="img-gates-open"
+        src={gatesOpen.src}
+        class="absolute inset-0 h-dvh w-full object-cover opacity-0 transition-opacity
+        duration-700"
+      />
       <!-- Ustreet logo and next event -->
       <Logo />
 
       <!-- Narrative and nav buttons -->
-      <Narrative narrative={data.narrative} page="intro" />
+      <NarrativeIntro narrative={narrativeData.text} />
 
-      <button id="btn-start" type="button" class="
-        absolute bottom-12 left-1/2 w-40 -translate-x-1/2 cursor-pointer
-      "><img src={start.src} /></button>
-      <div id="btn-container" class="
-        absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-row gap-12
-      ">
-        <button id="btn-back" type="button"><img src={back.src} class="
-          w-15 cursor-pointer
-          lg:w-20
-        " /></button>
-        <button id="btn-next" type="button"><img src={next.src} class="
-          w-15 cursor-pointer
-          lg:w-20
-        " /></button>
-        <button id="btn-enter" type="button" class="hidden cursor-pointer"><img src={enter.src} class="
-          w-15
-          lg:w-20
-        " /></button>
+      <button
+        id="btn-start"
+        type="button"
+        class="absolute bottom-12 left-1/2 w-40 -translate-x-1/2 cursor-pointer"
+      >
+        <img src={start.src} />
+      </button>
+      <div
+        id="btn-container"
+        class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-row gap-12"
+      >
+        <button id="btn-back" type="button">
+          <img
+            src={back.src}
+            class="w-15 cursor-pointer
+          lg:w-20"
+          />
+        </button>
+        <button id="btn-next" type="button">
+          <img
+            src={next.src}
+            class="w-15 cursor-pointer
+          lg:w-20"
+          />
+        </button>
+        <button id="btn-enter" type="button" class="hidden cursor-pointer">
+          <img
+            src={enter.src}
+            class="w-15
+          lg:w-20"
+          />
+        </button>
       </div>
     </div>
   </section>
@@ -66,7 +96,7 @@ const data = archieml.load(text);
   const bgImage2 = document.getElementById("img-gates-open");
 
   const startBtn = document.getElementById("btn-start");
-  const btnContainer = document.getElementById("btn-container")
+  const btnContainer = document.getElementById("btn-container");
   const nextBtn = document.getElementById("btn-next");
   const backBtn = document.getElementById("btn-back");
   const enterBtn = document.getElementById("btn-enter");
@@ -78,9 +108,9 @@ const data = archieml.load(text);
     if (isDesktop) {
       const uStreetLogo = document.getElementById("ustreet-logo");
       uStreetLogo?.classList.remove("top-5", "left-5");
-      uStreetLogo?.classList.add("top-10", "left-20")
+      uStreetLogo?.classList.add("top-10", "left-20");
     }
-  })
+  });
 
   let activeIndex = 0;
 
@@ -88,13 +118,13 @@ const data = archieml.load(text);
     // Start narrative
     lines[activeIndex].classList.replace("visible", "hidden");
     activeIndex = (activeIndex + 1) % lines.length;
-    lines[activeIndex].classList.replace('hidden', 'visible');
+    lines[activeIndex].classList.replace("hidden", "visible");
 
     // Replace start button with next and back
-    startBtn.classList.add("hidden")
-    btnContainer?.classList.remove("hidden")
-    btnContainer?.classList.add("flex")
-  })
+    startBtn.classList.add("hidden");
+    btnContainer?.classList.remove("hidden");
+    btnContainer?.classList.add("flex");
+  });
 
   nextBtn?.addEventListener("click", () => {
     lines[activeIndex].classList.replace("visible", "hidden");
@@ -105,32 +135,35 @@ const data = archieml.load(text);
       nextBtn.classList.add("hidden");
       enterBtn?.classList.remove("hidden");
     }
-   }
-  );
+  });
 
   enterBtn?.addEventListener("click", () => {
     // Trigger gate animation
-    bgImage?.classList.add("opacity-0")
-    bgImage?.classList.remove("opacity-100")
+    bgImage?.classList.add("opacity-0");
+    bgImage?.classList.remove("opacity-100");
 
-    bgImage2?.classList.add("opacity-100")
-    bgImage2?.classList.remove("opacity-0")
+    bgImage2?.classList.add("opacity-100");
+    bgImage2?.classList.remove("opacity-0");
 
     // Hide narrative section
     const narrativeWrapper = document.getElementById("narrative-wrapper");
     narrativeWrapper?.classList.add("hidden");
 
     // Navigate to garden page
-    bgImage?.addEventListener("transitionend", () => {
-      window.location.href = "/garden"
-    }, {once: true})
-  })
+    bgImage?.addEventListener(
+      "transitionend",
+      () => {
+        window.location.href = "/garden";
+      },
+      { once: true },
+    );
+  });
 
   backBtn?.addEventListener("click", () => {
     if (activeIndex === 1) {
-      startBtn?.classList.remove("hidden")
-      btnContainer?.classList.remove("flex")
-      btnContainer?.classList.add("hidden")
+      startBtn?.classList.remove("hidden");
+      btnContainer?.classList.remove("flex");
+      btnContainer?.classList.add("hidden");
     }
 
     if (activeIndex === lines.length - 1) {
@@ -140,6 +173,6 @@ const data = archieml.load(text);
 
     lines[activeIndex].classList.replace("visible", "hidden");
     activeIndex -= 1;
-    lines[activeIndex].classList.replace('hidden', 'visible');
-  })
+    lines[activeIndex].classList.replace("hidden", "visible");
+  });
 </script>
