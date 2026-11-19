@@ -64,11 +64,11 @@ const narrativeData =
         <!-- Render clickable plant images -->
         {plants.map((plant) => (
           <Plant
-            id={plant.id}
+            slug={plant.slug}
             imgSrc={plant.imgSrc}
             variant="btn"
             class={plant.class}
-            modalTarget={`${plant.id}-modal`}
+            modalTarget={`${plant.slug}-modal`}
           />
         ))}
 
@@ -105,19 +105,14 @@ const narrativeData =
 <script>
   import { isPlantView, isEventView, isHistoryView } from "../stores/garden";
 
-  const historyViewBtn = document.getElementById("history-view");
-  const eventViewBtn = document.getElementById("event-view");
-
   const plantImgs = document.querySelectorAll<HTMLElement>(
     "[data-plant-btn] > img",
   );
-
   const historySlider = document.getElementById("history-slider");
   const table = document.getElementById("table");
-  const narrativeText = document.getElementById("narrative-text");
 
   isPlantView.subscribe((plantView) => {
-    // Add swaying animation to plants
+    // Handle plant swaying animation
     plantImgs.forEach((plantImg) => {
       if (plantImg) {
         if (plantView) {
@@ -130,6 +125,7 @@ const narrativeData =
   });
 
   isHistoryView.subscribe((historyView) => {
+    // Handle slider view
     if (historyView) {
       historySlider?.classList.remove("hidden");
     } else {
@@ -138,6 +134,7 @@ const narrativeData =
   });
 
   isEventView.subscribe((eventView) => {
+    // Handle table swaying animation
     if (eventView) {
       table?.classList.add("animate-sway");
     } else {
@@ -145,7 +142,7 @@ const narrativeData =
     }
   });
 
-  // Remove pulsing animation when plant/table clicked
+  // Remove swaying animation when plant/table clicked
   plantImgs.forEach((plantImg) =>
     plantImg.addEventListener("click", () => {
       plantImg.classList.remove("animate-sway");

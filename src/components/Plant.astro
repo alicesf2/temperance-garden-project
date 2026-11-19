@@ -1,40 +1,43 @@
 ---
-import { cx } from '../lib/utils';
+import { cx } from "../lib/utils";
 import "../styles/global.css";
 
 interface Props {
-  id: string;
+  slug: string;
   imgSrc: string;
-  variant: "btn"|"img";
+  variant: "btn" | "img";
   class?: string;
   modalTarget?: string;
   modalWidth?: number;
 }
 
-const { id, imgSrc, variant, class: className, modalTarget, modalWidth } = Astro.props;
+const {
+  slug,
+  imgSrc,
+  variant,
+  class: className,
+  modalTarget,
+  modalWidth,
+} = Astro.props;
 ---
 
 {variant === "btn" ? (
   <button
-    id={`${id}-btn`}
-    class={cx(`
+    id={`${slug}-btn`}
+    class={cx(
+      `
       z-10
       hover:drop-shadow-[0_0_15px_rgba(255,220,0,1)]
-    `, className)}
+    `,
+      className,
+    )}
     data-modal-target={modalTarget}
     data-modal-toggle={modalTarget}
     data-plant-btn
     type="button"
   >
-    <img
-      src={imgSrc}
-      class="cursor-pointer"
-    />
+    <img src={imgSrc} class="cursor-pointer" />
   </button>
 ) : (
-    <img
-      src={imgSrc}
-      width={modalWidth}
-    />
+  <img src={imgSrc} width={modalWidth} />
 )}
-
