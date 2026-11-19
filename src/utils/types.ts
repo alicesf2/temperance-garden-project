@@ -20,3 +20,9 @@ export interface NarrativeType {
     eventView?: string;
 }
 
+export interface ImageType {
+    image: any;
+    altText: string;
+    caption: string;
+}
+

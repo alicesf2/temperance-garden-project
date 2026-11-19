@@ -3,13 +3,11 @@ import "../styles/global.css";
 import Plant from "./Plant.astro";
 import back from "../assets/back.png";
 import next from "../assets/next.png";
-import type { GiftType } from "../utils/types";
+import type { GiftType, ImageType } from "../utils/types";
 import SanityImage from "./SanityImage.astro";
 
 const { slug, description, gifts, images } = Astro.props;
 const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant;
-
-console.log(images);
 ---
 
 <div class="embla relative size-full">
@@ -52,10 +50,14 @@ console.log(images);
       <div class="embla__slide min-w-0 flex-[0_0_100%]">
         <div class="flex flex-col gap-8">
           {images &&
-            images.map((image: any) => (
+            images.map((image: ImageType) => (
               <>
-                <SanityImage image={image} alt="placeholder" width={250} />
-                <figcaption>Photo caption</figcaption>
+                <SanityImage
+                  image={image.image}
+                  alt={image.altText}
+                  width={250}
+                />
+                <figcaption class="text-2xl">{image.caption}</figcaption>
               </>
             ))}
         </div>
