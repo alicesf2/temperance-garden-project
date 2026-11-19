@@ -1,6 +1,5 @@
 ---
-import type { Plant as PlantType } from "../pages/garden.astro";
-import Plant from "../components/Plant.astro"
+import type { PlantType } from "../utils/types";
 import PlantCarousel from "./PlantCarousel.astro";
 import "../styles/global.css";
 import { plants } from "../utils/plants";
@@ -9,50 +8,43 @@ interface Props {
   plant: PlantType;
 }
 
-const { name, slug, scientific, description, gifts } = Astro.props.plant;
-const activePlant = plants.find(plant => plant.slug === slug);
+const { name, slug, scientific, description, gifts, images } =
+  Astro.props.plant;
+const activePlant = plants.find((plant) => plant.slug === slug);
 ---
 
 <div
   id={`${slug}-modal`}
   tabindex="-1"
   aria-hidden="true"
-  class="
-    fixed inset-x-0 top-0 z-50 hidden h-dvh w-full justify-center
+  class="fixed inset-x-0 top-0 z-50 hidden h-dvh w-full justify-center
     overflow-hidden
     md:inset-0
-    lg:mx-auto lg:w-200
-  "
+    lg:mx-auto lg:w-200"
 >
   <div class="relative h-dvh w-full p-4">
     <!-- Modal content -->
     <div
-      class="
-        relative h-full rounded-base border border-default
+      class="relative h-full rounded-base border border-default
         bg-neutral-primary-soft p-4 font-narrative shadow-sm
-        md:p-6
-      "
+        md:p-6"
     >
       <!-- Modal header -->
       <div
-        class="
-          flex items-start gap-8 border-b border-default pb-4
-          md:pb-5
-        "
+        class="flex items-start gap-8 border-b border-default pb-4
+          md:pb-5"
       >
         <div>
-          <h3 class="
-            text-4xl font-semibold whitespace-nowrap text-heading capitalize
-          ">{name}</h3>
+          <h3 class="text-4xl font-semibold whitespace-nowrap text-heading capitalize">
+            {name}
+          </h3>
           <p class="text-3xl whitespace-nowrap italic">{scientific}</p>
         </div>
         <button
           type="button"
-          class="
-            ms-auto inline-flex size-9 cursor-pointer items-center
+          class="ms-auto inline-flex size-9 cursor-pointer items-center
             justify-center rounded-base bg-transparent text-sm text-body
-            hover:bg-neutral-tertiary hover:text-heading
-          "
+            hover:bg-neutral-tertiary hover:text-heading"
           data-modal-hide={`${slug}-modal`}
         >
           <svg
@@ -70,18 +62,23 @@ const activePlant = plants.find(plant => plant.slug === slug);
               stroke-linejoin="round"
               stroke-width="2"
               d="M6 18 17.94 6M18 18 6.06 6"
-            >
-            </path>
+            ></path>
           </svg>
           <span class="sr-only">Close modal</span>
         </button>
       </div>
       <!-- Modal body -->
-      <div class="
-        flex h-full flex-col items-center justify-center space-y-2 py-2
-        md:space-y-4 md:py-4
-      ">
-        <PlantCarousel slug={slug} description={description} gifts={gifts} activePlant={activePlant} />
+      <div
+        class="flex h-full flex-col items-center justify-center space-y-2 py-2
+        md:space-y-4 md:py-4"
+      >
+        <PlantCarousel
+          slug={slug}
+          description={description}
+          gifts={gifts}
+          images={images}
+          activePlant={activePlant}
+        />
       </div>
     </div>
   </div>

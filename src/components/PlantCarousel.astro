@@ -3,23 +3,22 @@ import "../styles/global.css";
 import Plant from "./Plant.astro";
 import back from "../assets/back.png";
 import next from "../assets/next.png";
+import type { GiftType } from "../utils/types";
+import SanityImage from "./SanityImage.astro";
 
-const { slug, description, gifts } = Astro.props;
+const { slug, description, gifts, images } = Astro.props;
 const { imgSrc, modalWidth, modalClass } = Astro.props.activePlant;
 
-interface Gift {
-  description: string;
-  sources: string[];
-}
+console.log(images);
 ---
 
 <div class="embla relative size-full">
-  <div class="embla__viewport h-[80%] w-full overflow-hidden">
-    <div class="embla__container flex touch-pan-y">
+  <div class="embla__viewport h-[80%] w-full overflow-x-hidden">
+    <div class="embla__container flex touch-pan-y overflow-y-visible">
       <!-- Slide 1 -->
       <div class="embla__slide flex min-w-0 flex-[0_0_100%] flex-col items-center">
         <Plant
-          id="primrose"
+          slug={slug}
           imgSrc={imgSrc}
           variant="img"
           class={modalClass}
@@ -28,24 +27,39 @@ interface Gift {
         <p class="text-3xl/snug text-body">{description}</p>
       </div>
       <!-- Slide 2 -->
-      <!-- <div class="embla__slide min-w-0 flex-[0_0_100%]">
-                <h2 class="text-4xl">Gifts</h2>
-                <ul class="ml-8 list-disc text-2xl">
-                    {gifts.map((gift: Gift) => (
-                        <li>
-                            <span>{gift.description}</span>
-                            <span>{gift.sources.map((source: string, i: number) => (
-                                <span>
-                                    <a href={source}>{`[${i}]`}</a>
-                                </span>
-                            ))}
-                            </span>
-                        </li>
-                    ))}
-                </ul>
-            </div> -->
+      <div class="embla__slide min-w-0 flex-[0_0_100%]">
+        <h2 class="text-4xl">Gifts</h2>
+        <ul class="ml-8 list-disc text-3xl">
+          {gifts.map((gift: GiftType) => (
+            <li>
+              <span>{gift.description}</span>
+              <span>
+                {gift.sources?.map((source: string, i: number) => (
+                  <span>
+                    [
+                    <a href={source} class="underline text-blue-700">
+                      {gift.sources.length > 1 ? `Source ${i + 1}` : `Source`}
+                    </a>
+                    ]
+                  </span>
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
       <!-- Slide 3 -->
-      <div class="embla__slide min-w-0 flex-[0_0_100%]">Slide 3</div>
+      <div class="embla__slide min-w-0 flex-[0_0_100%]">
+        <div class="flex flex-col gap-8">
+          {images &&
+            images.map((image: any) => (
+              <>
+                <SanityImage image={image} alt="placeholder" width={250} />
+                <figcaption>Photo caption</figcaption>
+              </>
+            ))}
+        </div>
+      </div>
     </div>
   </div>
 
